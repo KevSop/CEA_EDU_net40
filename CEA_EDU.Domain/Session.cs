@@ -123,7 +123,7 @@ namespace CEA_EDU.Domain
     {
         public static IDbConnection CreateConnection()
         {
-            var strConn = ConfigurationManager.ConnectionStrings["HRMSDBConnectionString"].ToString();
+            var strConn = ConfigurationManager.ConnectionStrings["ECAEDUConnectionString"].ToString();
             IDbConnection conn = new SqlConnection(strConn);
             if (conn.State == ConnectionState.Closed)
             {
