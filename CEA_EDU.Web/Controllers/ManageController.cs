@@ -25,15 +25,14 @@ namespace CEA_EDU.Web.Controllers
     {
         public ActionResult UserIndex()
         {
-            DicManager dm = new DicManager();
-            var companies = dm.GetDicByType("公司");
-            ViewBag.Companies = companies;
+            ViewBag.Companies = new SysDicManager().GetDicByParentCode("Company");
 
             var contents = GetStandardMenuTree(false);
             ViewBag.treeNodes = JsonConvert.SerializeObject(contents);
 
             return View();
         }
+
         public ActionResult DicIndex()
         {
             return View();
@@ -66,19 +65,28 @@ namespace CEA_EDU.Web.Controllers
 
             int total = 0;
             UserManager um = new UserManager();
-            List<UserEntity> list = um.GetSearch(searchKey, sort, order, offset, pageSize, out total);
+            List<UserInfoEntity> list = um.GetSearch(searchKey, sort, order, offset, pageSize, out total);
 
-            DicManager dm = new DicManager();
-            List<DicEntity> companyDicE = dm.GetDicByType("公司");
-            Dictionary<string, string> companyDic = new Dictionary<string, string>();
-            foreach (var item in companyDicE)
-            {
-                companyDic.Add(item.iKey, item.iValue);
-            }
             List<UserViewModel> listView = new List<UserViewModel>();
             foreach (var item in list)
             {
-                listView.Add(new UserViewModel { iCompanyCode = item.iCompanyCode, iCompanyName = companyDic[item.iCompanyCode], iEmployeeCodeId = item.iEmployeeCodeId, iPassWord = item.iPassWord, iUserName = item.iUserName, iUserType = item.iUserType, iUpdatedOn = item.iUpdatedOn.ToString("yyyyMMdd HH:mm") });
+                listView.Add(new UserViewModel { 
+                    ID = item.ID,
+                    Code = item.Code, 
+                    Name = item.Name, 
+                    Type = item.Type, 
+                    Group = item.Group, 
+                    Company = item.Company, 
+                    Department = item.Department, 
+                    PositionID = item.PositionID, 
+                    PositionName = item.PositionName, 
+                    Sex = item.Sex,
+                    Birthday = item.Birthday == null ? "" : ((DateTime)item.Birthday).ToString("yyyy-MM-dd"), 
+                    Email = item.Email, 
+                    Phone = item.Phone, 
+                    Address = item.Address, 
+                    UpdateTime = item.UpdateTime
+                });
             }
 
             //给分页实体赋值  
@@ -100,92 +108,22 @@ namespace CEA_EDU.Web.Controllers
 
             try
             {
-                UserEntity ue = JsonConvert.DeserializeObject<UserEntity>(jsonString);
+                UserInfoEntity ue = JsonConvert.DeserializeObject<UserInfoEntity>(jsonString);
                 UserManager pm = new UserManager();
                 if (action == "add")
                 {
-                    ue.iCreatedBy = SessionHelper.CurrentUser.iUserName;
-                    ue.iUpdatedBy = SessionHelper.CurrentUser.iUserName;
                     pm.Insert(ue);
                 }
                 else
                 {
-                    UserEntity ueOld = pm.GetUser(ue.iEmployeeCodeId);
-                    ue.iUpdatedBy = SessionHelper.CurrentUser.iUserName;
-                    ue.iCreatedBy = ueOld.iCreatedBy;
-                    ue.iCreatedOn = ueOld.iCreatedOn;
-                    pm.Update(ue);
-                }
-                return "success";
-            }
-            catch (Exception e)
-            {
-                return e.ToString();
-            }
-        }
+                    UserInfoEntity ueOld = pm.GetUser(ue.Code);
+                    ueOld.Name = ue.Name;
+                    ueOld.Type = ue.Type;
+                    ueOld.Company = ue.Company;
 
-        #endregion
+                    ueOld.UpdateBy = SessionHelper.CurrentUser.Code;
 
-        #region 字典方法
-
-        public void GetAllDics()
-        {
-            //用于序列化实体类的对象  
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-
-            //请求中携带的条件  
-            string order = HttpContext.Request.Params["order"];
-            string sort = HttpContext.Request.Params["sort"];
-            string searchKey = HttpContext.Request.Params["search"];
-            int offset = Convert.ToInt32(HttpContext.Request.Params["offset"]);  //0
-            int pageSize = Convert.ToInt32(HttpContext.Request.Params["limit"]);
-
-            int total = 0;
-            DicManager dm = new DicManager();
-            List<DicEntity> list = dm.GetSearch(searchKey, sort, order, offset, pageSize, out total);
-            List<DicViewModel> listView = new List<DicViewModel>();
-            foreach (var item in list)
-            {
-                listView.Add(new DicViewModel { iId = item.iId, iKey = item.iKey, iValue = item.iValue, iType = item.iType, iUpdatedOn = item.iUpdatedOn.ToString("yyyyMMdd HH:mm") });
-            }
-
-            //给分页实体赋值  
-            PageModels<DicViewModel> model = new PageModels<DicViewModel>();
-            model.total = total;
-            if (total % pageSize == 0)
-                model.page = total / pageSize;
-            else
-                model.page = (total / pageSize) + 1;
-
-            model.rows = listView;
-
-            //将查询结果返回  
-            HttpContext.Response.Write(jss.Serialize(model));
-        }
-
-        public string DicsSaveChanges(string jsonString, string action)
-        {
-
-            try
-            {
-                DicEntity ue = JsonConvert.DeserializeObject<DicEntity>(jsonString);
-                DicManager dm = new DicManager();
-                if (action == "add")
-                {
-                    ue.iId = Guid.NewGuid().ToString();
-                    ue.iKey = ue.iValue;
-                    ue.iCreatedBy = SessionHelper.CurrentUser.iUserName;
-                    ue.iUpdatedBy = SessionHelper.CurrentUser.iUserName;
-                    dm.Insert(ue);
-                }
-                else
-                {
-                    DicEntity ueOld = dm.GetDic(ue.iId);
-                    ue.iUpdatedBy = SessionHelper.CurrentUser.iUserName;
-                    ue.iKey = ueOld.iKey;
-                    ue.iCreatedBy = ueOld.iCreatedBy;
-                    ue.iCreatedOn = ueOld.iCreatedOn;
-                    dm.Update(ue);
+                    pm.Update(ueOld);
                 }
                 return "success";
             }
@@ -206,8 +144,8 @@ namespace CEA_EDU.Web.Controllers
             }
             else
             {
-                UserEntity userinfo = SessionHelper.CurrentUser;
-                userinfo.iCompanyCode = newCompany;
+                LoginUserViewModel userinfo = SessionHelper.CurrentUser;
+                userinfo.Company = newCompany;
                 Session[SessionHelper.CurrentUserKey] = userinfo;
                 return Content("success");
             }
@@ -239,7 +177,6 @@ namespace CEA_EDU.Web.Controllers
         }
         #endregion
 
-
         #region 菜单方法
         public string SaveItemTree(string treeJson)
         {
@@ -251,10 +188,10 @@ namespace CEA_EDU.Web.Controllers
                 {
                     string[] nameUrl = contents2[0].name.Split('$');
                     StringBuilder sourceTableSb = new StringBuilder("MERGE INTO [SysMenu] AS T USING( SELECT ");
-                    sourceTableSb.Append("'" + contents2[0].id + "' as IGUID, ");
-                    sourceTableSb.Append("'" + contents2[0].pId + "' as IPARENTID, ");
-                    sourceTableSb.Append("'" + nameUrl[0].Replace("'", "''") + "' as INAME, ");
-                    sourceTableSb.Append("'" + nameUrl[1] + "' as IURL ");
+                    sourceTableSb.Append("'" + contents2[0].id + "' as GUID, ");
+                    sourceTableSb.Append("'" + contents2[0].pId + "' as PARENTID, ");
+                    sourceTableSb.Append("'" + nameUrl[0].Replace("'", "''") + "' as NAME, ");
+                    sourceTableSb.Append("'" + nameUrl[1] + "' as URL ");
 
                     for (int i = 1; i < contents2.Count; i++)
                     {
@@ -265,7 +202,7 @@ namespace CEA_EDU.Web.Controllers
                         sourceTableSb.Append("'" + nameUrl[0].Replace("'", "''") + "', ");
                         sourceTableSb.Append("'" + nameUrl[1] + "' ");
                     }
-                    sourceTableSb.Append(") AS S ON T.IGUID = S.IGUID WHEN MATCHED THEN UPDATE SET T.IPARENTID=S.IPARENTID, T.INAME=S.INAME, T.IUrl = S.IURL WHEN NOT MATCHED THEN INSERT(IGUID,IPARENTID,INAME,IURL) VALUES(S.IGUID,S.IPARENTID,S.INAME,S.IURL);");
+                    sourceTableSb.Append(") AS S ON T.GUID = S.GUID WHEN MATCHED THEN UPDATE SET T.PARENTID=S.PARENTID, T.NAME=S.NAME, T.IUrl = S.URL WHEN NOT MATCHED THEN INSERT(GUID,PARENTID,NAME,URL) VALUES(S.GUID,S.PARENTID,S.NAME,S.URL);");
 
                     DbHelperSQL.ExecuteSql(sourceTableSb.ToString());
 
@@ -311,12 +248,12 @@ namespace CEA_EDU.Web.Controllers
             }
         }
 
-        public JsonResult GetUserMenuTree(string userId, string companyId)
+        public JsonResult GetUserMenuTree(string userCode)
         {
             try
             {
-                string querySql = "select iMenuId+'|'+iMenuRights from sysUserMenu where iemployeecode = '{0}' and icompanycode= '{1}'";
-                DataSet ds = DbHelperSQL.Query(string.Format(querySql, userId, companyId));
+                string querySql = "select MenuId+'|'+MenuRights from sysUserMenu where UserCode = '{0}'";
+                DataSet ds = DbHelperSQL.Query(string.Format(querySql, userCode));
                 List<string> contents = new List<string>();
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
@@ -338,22 +275,20 @@ namespace CEA_EDU.Web.Controllers
                 List<string> menuIds = JsonConvert.DeserializeObject<List<string>>(jsonString);
 
                 DataTable dt = new DataTable("sysUserMenu");
-                dt.Columns.Add("iEmployeeCode");
-                dt.Columns.Add("iCompanyCode");
-                dt.Columns.Add("iMenuId");
-                dt.Columns.Add("iMenuRights");
+                dt.Columns.Add("UserCode");
+                dt.Columns.Add("MenuId");
+                dt.Columns.Add("MenuRights");
                 foreach (string menuid in menuIds)
                 {
                     DataRow dataRow = dt.NewRow();
                     dataRow[0] = userid;
-                    dataRow[1] = companyid;
-                    dataRow[2] = menuid.Split('|')[0];
-                    dataRow[3] = menuid.Split('|')[1];
+                    dataRow[1] = menuid.Split('|')[0];
+                    dataRow[2] = menuid.Split('|')[1];
                     dt.Rows.Add(dataRow);
                 }
-                string deleteSql = "delete from [sysUserMenu] where iemployeecode = '{0}' and icompanycode = '{1}' ";
+                string deleteSql = "delete from [sysUserMenu] where UserCode = '{0}'";
                 DbHelperSQL.ExecuteSql(string.Format(deleteSql, userid, companyid));
-                WriteDataTableToServer(dt, "sysUserMenu", ConfigurationManager.ConnectionStrings["HRMSDBConnectionString"].ConnectionString);
+                WriteDataTableToServer(dt, "sysUserMenu", ConfigurationManager.ConnectionStrings["ECAEDUConnectionString"].ConnectionString);
                 return "success";
             }
             catch (Exception e)
@@ -364,7 +299,7 @@ namespace CEA_EDU.Web.Controllers
 
         private List<ItemContent> GetStandardMenuTree(bool widthUrl = true)
         {
-            string querySql = "select iguid, iparentid, iname, iUrl from  [sysMenu] ";
+            string querySql = "select guid, parentid, name, Url from  [sysMenu] ";
             DataSet ds = DbHelperSQL.Query(querySql);
             List<ItemContent> contents = new List<ItemContent>();
             foreach (DataRow dr in ds.Tables[0].Rows)
@@ -385,14 +320,14 @@ namespace CEA_EDU.Web.Controllers
 
         public string GetMenuHtml(string rootUrl)
         {
-            if (SessionHelper.CurrentUser.iUserType == "超级管理员")
+            if (SessionHelper.CurrentUser.Type == "超级管理员")
                 return "";
 
 
-            string querySql = "select iguid, iparentid, iname, iUrl from  [sysMenu] a inner join [sysUserMenu] b on a.iguid = b.imenuid and b.iemployeecode='" + SessionHelper.CurrentUser.iEmployeeCodeId + "' and b.icompanycode='" + SessionHelper.CurrentUser.iCompanyCode + "' ";
-            if (SessionHelper.CurrentUser.iUserType == "超级管理员")
+            string querySql = "select guid, parentid, name, Url from  [sysMenu] a inner join [sysUserMenu] b on a.guid = b.menuid and b.UserCode='" + SessionHelper.CurrentUser.Code + "'";
+            if (SessionHelper.CurrentUser.Type == "超级管理员")
             {
-                querySql = "select iguid, iparentid, iname, iUrl from  [sysMenu]";
+                querySql = "select guid, parentid, name, Url from  [sysMenu]";
             }
             DataSet ds = DbHelperSQL.Query(querySql);
             List<ItemContent> contents = new List<ItemContent>();

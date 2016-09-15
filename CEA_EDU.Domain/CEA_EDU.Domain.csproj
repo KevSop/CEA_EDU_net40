@@ -47,68 +47,39 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbHelperSQL.cs" />
-    <Compile Include="Entity\DicEntity.cs" />
-    <Compile Include="Entity\Table.cs" />
-    <Compile Include="Entity\UserEntity.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="ManagerBase.cs" />
-    <Compile Include="Manager\DictionaryManager.cs" />
-    <Compile Include="Manager\DicManager.cs" />
-    <Compile Include="Manager\UserManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository.cs" />
-    <Compile Include="Session.cs" />
-    <Compile Include="SplitPage.cs" />
-    <Compile Include="T4\ArrangeClassEntity.cs">
-      <DependentUpon>GenEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4\ClassInfoEntity.cs">
-      <DependentUpon>GenEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4\ClassRoomInfoEntity.cs">
-      <DependentUpon>GenEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4\ClassStudentMapEntity.cs">
-      <DependentUpon>GenEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4\CompanyInfoEntity.cs">
-      <DependentUpon>GenEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4\CurriculumInfoEntity.cs">
-      <DependentUpon>GenEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4\DBSchema.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBSchema.ttinclude</DependentUpon>
-    </Compile>
-    <Compile Include="T4\DictionaryEntity.cs">
-      <DependentUpon>GenEntity.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Entity\ArrangeClassEntity.cs" />
+    <Compile Include="Entity\ClassInfoEntity.cs" />
+    <Compile Include="Entity\ClassRoomInfoEntity.cs" />
+    <Compile Include="Entity\ClassStudentMapEntity.cs" />
+    <Compile Include="Entity\CompanyInfoEntity.cs" />
+    <Compile Include="Entity\CurriculumInfoEntity.cs" />
+    <Compile Include="Entity\LoginLogEntity.cs" />
+    <Compile Include="Entity\SchoolInfoEntity.cs" />
+    <Compile Include="Entity\StudentClassHistoryEntity.cs" />
     <Compile Include="T4\GenEntity.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GenEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="T4\LoginLogEntity.cs">
-      <DependentUpon>GenEntity.tt</DependentUpon>
+    <Compile Include="Entity\Table.cs" />
+    <Compile Include="Entity\UserInfoEntity.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="ManagerBase.cs" />
+    <Compile Include="Manager\SysDicManager.cs" />
+    <Compile Include="Manager\UserManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="Session.cs" />
+    <Compile Include="SplitPage.cs" />
+    <Compile Include="T4\DBSchema.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBSchema.ttinclude</DependentUpon>
     </Compile>
     <Compile Include="T4\MultiDocument1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MultiDocument.ttinclude</DependentUpon>
-    </Compile>
-    <Compile Include="T4\SchoolInfoEntity.cs">
-      <DependentUpon>GenEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4\StudentClassHistoryEntity.cs">
-      <DependentUpon>GenEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4\StudentInfoEntity.cs">
-      <DependentUpon>GenEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4\TeacherInfoEntity.cs">
-      <DependentUpon>GenEntity.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -144,10 +115,52 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\SysDicEntity.cs" />
+    <Compile Include="Entity\SysMenuEntity.cs" />
+    <Compile Include="Entity\SysUserMenuEntity.cs" />
+    <Content Include="T4\ArrangeClassEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
+    </Content>
+    <Content Include="T4\ClassInfoEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
+    </Content>
+    <Content Include="T4\ClassRoomInfoEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
+    </Content>
+    <Content Include="T4\ClassStudentMapEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
+    </Content>
+    <Content Include="T4\CompanyInfoEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
+    </Content>
+    <Content Include="T4\CurriculumInfoEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
+    </Content>
     <Content Include="T4\GenEntityBase.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GenEntityBase.tt</DependentUpon>
+    </Content>
+    <Content Include="T4\LoginLogEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
+    </Content>
+    <Content Include="T4\SchoolInfoEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
+    </Content>
+    <Content Include="T4\StudentClassHistoryEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
+    </Content>
+    <Content Include="T4\SysDicEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
+    </Content>
+    <Content Include="T4\SysMenuEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
+    </Content>
+    <Content Include="T4\SysUserMenuEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
+    </Content>
+    <Content Include="T4\UserInfoEntity.txt">
+      <DependentUpon>GenEntity.tt</DependentUpon>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

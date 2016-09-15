@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using CEA_EDU.Domain.Entity;
+using CEA_EDU.Common.Extend;
 
 namespace CEA_EDU.Domain.Manager
 {
@@ -18,17 +19,17 @@ namespace CEA_EDU.Domain.Manager
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public void Insert(UserEntity entity)
+        public void Insert(UserInfoEntity entity)
         {
-            entity.iCreatedOn = DateTime.Now;
-            entity.iUpdatedOn = DateTime.Now;
-            entity.iStatus = 1;
-            entity.iIsDeleted = 0;
+            entity.Valid = "T";
+            entity.CreateTime = DateTime.Now;
+            entity.UpdateTime = DateTime.Now;
+
             IDbSession session = SessionFactory.CreateSession();
             try
             {
                 session.BeginTrans();
-                Repository.Insert<UserEntity>(session.Connection, entity, session.Transaction);
+                Repository.Insert<UserInfoEntity>(session.Connection, entity, session.Transaction);
                 session.Commit();
             }
             catch (System.Exception)
@@ -42,16 +43,15 @@ namespace CEA_EDU.Domain.Manager
             }
         }
 
-        public void Update(UserEntity entity)
+        public void Update(UserInfoEntity entity)
         {
-            entity.iUpdatedOn = DateTime.Now;
-            entity.iStatus = 1;
-            entity.iIsDeleted = 0;
+            entity.UpdateTime = DateTime.Now;
+
             IDbSession session = SessionFactory.CreateSession();
             try
             {
                 session.BeginTrans();
-                Repository.Update<UserEntity>(session.Connection, entity, session.Transaction);
+                Repository.Update<UserInfoEntity>(session.Connection, entity, session.Transaction);
                 session.Commit();
             }
             catch (System.Exception)
@@ -65,21 +65,53 @@ namespace CEA_EDU.Domain.Manager
             }
         }
 
-        public UserEntity GetUser(string employeeCode)
+        public UserInfoEntity GetUser(int id)
         {
-            string sql = @"select * from SysUser where iemployeecodeId=@empcode and iIsDeleted =0 and iStatus =1";
-            return Repository.Query<UserEntity>(sql, new { empcode = employeeCode }).FirstOrDefault();
+            string sql = @"select * from UserInfo where id = @id";
+            return Repository.Query<UserInfoEntity>(sql, new { id = id }).FirstOrDefault();
         }
 
-        public List<UserEntity> GetSearch(string keyString, string sort, string order, int offset, int pageSize, out int total)
+        public UserInfoEntity GetUser(string code)
         {
-            string commonSql = "from SysUser where iIsDeleted =0 and iStatus =1 and iUserName like '%{0}%' ";
-            string querySql = "select * " + commonSql + "order by {1} {2} offset {3} row fetch next {4} rows only";
-            querySql = string.Format(querySql, keyString, sort, order, offset, pageSize);
-            string totalSql = string.Format("select cast(count(1) as varchar(8)) " + commonSql, keyString);
-            total = int.Parse(Repository.Query<string>(totalSql).ToList()[0]);
-            return Repository.Query<UserEntity>(querySql).ToList();
+            string sql = @"select * from UserInfo where code = @code";
+            return Repository.Query<UserInfoEntity>(sql, new { code = code }).FirstOrDefault();
+        }
 
+        public List<UserInfoEntity> GetSearch(string keyString, string sort, string order, int offset, int pageSize, out int total)
+        {
+            int pageCount = 0;
+            string querySql = string.Format("select * from UserInfo where (code like '%{0}%' or name like '%{0}%') ", keyString);
+            DataTable dt = SplitPage.SqlSplitPage(querySql, string.Format("order by {0} {1}", sort, order), null, offset / pageSize, pageSize, out pageCount, out total);
+            List<UserInfoEntity> list = new List<UserInfoEntity>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                UserInfoEntity entity = new UserInfoEntity();
+
+                entity.ID = Ext.ToInt(dr["id"]);
+                entity.Code = Ext.ToString(dr["code"]);
+                entity.Name = Ext.ToString(dr["name"]);
+                entity.Password = Ext.ToString(dr["password"]);
+                entity.Type = Ext.ToString(dr["type"]);
+                entity.Group = Ext.ToString(dr["group"]);
+                entity.Company = Ext.ToString(dr["company"]);
+                entity.Department = Ext.ToString(dr["department"]);
+                entity.PositionID = Ext.ToString(dr["positionID"]);
+                entity.PositionName = Ext.ToString(dr["positionName"]);
+                entity.Sex = Ext.ToString(dr["sex"]);
+                entity.Birthday = Ext.ToDate(dr["birthday"]);
+                entity.Email = Ext.ToString(dr["email"]);
+                entity.Phone = Ext.ToString(dr["phone"]);
+                entity.Address = Ext.ToString(dr["address"]);
+                entity.Valid = Ext.ToString(dr["valid"]);
+                entity.CreateTime = Ext.ToDate(dr["createTime"]);
+                entity.CreateBy = Ext.ToString(dr["createBy"]);
+                entity.UpdateTime = Ext.ToDate(dr["updateTime"]);
+                entity.UpdateBy = Ext.ToString(dr["updateBy"]);
+
+                list.Add(entity);
+            }
+
+            return list;
         }
     }
 }

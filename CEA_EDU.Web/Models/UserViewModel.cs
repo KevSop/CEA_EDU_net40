@@ -8,13 +8,21 @@ namespace CEA_EDU.Web.Models
 {
     public class UserViewModel
     {
-        public string iEmployeeCodeId { get; set; }
-        public string iCompanyCode { get; set; }
+        public int ID { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Group { get; set; }
+        public string Company { get; set; }
+        public string Department { get; set; }
+        public string PositionID { get; set; }
+        public string PositionName { get; set; }
+        public string Sex { get; set; }
+        public string Birthday { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Address { get; set; }
+        public DateTime UpdateTime { get; set; }
 
-        public string iCompanyName { get; set; }
-        public string iUserName { get; set; }
-        public string iPassWord { get; set; }
-        public string iUserType { get; set; }
-        public string iUpdatedOn { get; set; }
     }
 }

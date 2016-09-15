@@ -24,36 +24,36 @@ namespace CEA_EDU.Web.API
     {
         public string GetDic()
         {
-            DictionaryManager dm = new DictionaryManager();
+            SysDicManager dm = new SysDicManager();
             return new JavaScriptSerializer().Serialize(dm.GetDic(0));
         }
      
-        public DictionaryEntity GetDicByID(int ID)
+        public SysDicEntity GetDicByID(int ID)
         {
-            DictionaryManager dm = new DictionaryManager();
+            SysDicManager dm = new SysDicManager();
             return dm.GetDic(ID);
         }
 
-        public DictionaryEntity GetDicByCode(string code)
+        public SysDicEntity GetDicByCode(string code)
         {
-            DictionaryManager dm = new DictionaryManager();
+            SysDicManager dm = new SysDicManager();
             return dm.GetDicByCode(code);
         }
 
         public string GetDicByName(string name)
         {
-            DictionaryManager dm = new DictionaryManager();
+            SysDicManager dm = new SysDicManager();
             return new JavaScriptSerializer().Serialize(dm.GetDicByName(name));
         }
 
         public string GetAllDics(string order, string sort, string searchKey, int offset, int pageSize)
         {
             int total = 0;
-            DictionaryManager dm = new DictionaryManager();
-            List<DictionaryEntity> list = dm.GetSearch(searchKey, sort, order, offset, pageSize, out total);
+            SysDicManager dm = new SysDicManager();
+            List<SysDicEntity> list = dm.GetSearch(searchKey, sort, order, offset, pageSize, out total);
 
             //给分页实体赋值  
-            PageModels<DictionaryEntity> model = new PageModels<DictionaryEntity>();
+            PageModels<SysDicEntity> model = new PageModels<SysDicEntity>();
             model.total = total;
             if (total % pageSize == 0)
                 model.page = total / pageSize;
@@ -66,7 +66,7 @@ namespace CEA_EDU.Web.API
             return new JavaScriptSerializer().Serialize(model);
         }
 
-        public string PostDic(DictionaryEntity entity)
+        public string PostDic(SysDicEntity entity)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace CEA_EDU.Web.API
                     return "error";
                 }
 
-                DictionaryManager dm = new DictionaryManager();
+                SysDicManager dm = new SysDicManager();
 
                 entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
@@ -93,7 +93,7 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string PutDic(DictionaryEntity entity)
+        public string PutDic(SysDicEntity entity)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace CEA_EDU.Web.API
                     return "error";
                 }
 
-                DictionaryManager dm = new DictionaryManager();
+                SysDicManager dm = new SysDicManager();
 
                 entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
@@ -126,9 +126,9 @@ namespace CEA_EDU.Web.API
             {
                 //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
 
-                DictionaryManager dm = new DictionaryManager();
+                SysDicManager dm = new SysDicManager();
 
-                DictionaryEntity entity = dm.GetDic(id);
+                SysDicEntity entity = dm.GetDic(id);
 
                 entity.Valid = "F";
                 entity.CreateTime = DateTime.Now;

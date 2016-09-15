@@ -45,16 +45,20 @@ namespace CEA_EDU.Web.Controllers
 
         private string HasVisitRights(string url)
         {
-            if (SessionHelper.CurrentUser.iUserType == "超级管理员")
+            if (SessionHelper.CurrentUser == null)
+            {
+                return "deny";
+            }
+            
+            if (SessionHelper.CurrentUser.Type == "超级管理员")
                 return "w";
 
-            string sql = "SELECT top 1 [iMenuRights] FROM [SysUserMenu] a inner join [SysMenu] b on a.iMenuId = b.iguid and iEmployeeCode = '{0}' and iCompanyCode='{1}' and b.iUrl = '{2}'";
-            DataSet ds = DbHelperSQL.Query(string.Format(sql, SessionHelper.CurrentUser.iEmployeeCodeId, SessionHelper.CurrentUser.iCompanyCode, url));
+            string sql = "SELECT top 1 [MenuRights] FROM [SysUserMenu] a inner join [SysMenu] b on a.MenuId = b.guid and a.UserCode = '{0}' and b.Url = '{1}'";
+            DataSet ds = DbHelperSQL.Query(string.Format(sql, SessionHelper.CurrentUser.Code, url));
 
             if (ds.Tables[0].Rows.Count == 0)
                 return "deny";
             else return ds.Tables[0].Rows[0][0].ToString();
-            
         }
     }
 }

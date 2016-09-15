@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>HRMS</title>
+    <title>动航大学</title>
     <link href="~/FlatLab/css/bootstrap.min.css?v=267" rel="stylesheet">
     <link href="~/FlatLab/bootstrap-table/src/bootstrap-table.css" rel="stylesheet" />
     <link href="~/FlatLab/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
@@ -42,12 +42,13 @@
     <script src="~/FlatLab/knockout-3.4.0.js"></script>
     <script src="~/FlatLab/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
     <script src="~/FlatLab/bootstrap-datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="~/FlatLab/common.js"></script>
 
     @RenderSection("scripts", required: false)
     <script>
         function ChangeCompany(newCompany) {
             $.ajax({
-                url: "/Manage/ChangeCompany?newCompany=" + newCompany,
+                url: "../Manage/ChangeCompany?newCompany=" + newCompany,
                 type: "GET",
                 dataType: 'text',
                 success: function (data) {
@@ -70,25 +71,25 @@
         <div class="sidebar-toggle-box">
             <div data-original-title="导航伸缩" data-placement="right" class="icon-reorder tooltips"></div>
         </div>
-        <a href="/" class="logo"><span>人力资源管理</span>平台</a>
+        <a href="/" class="logo"><span>动航大学</span>教育平台</a>
 
         <div class="top-nav ">
             <ul class="nav pull-right top-menu">
                 @{
-                    if (CEA_EDU.Web.Utils.SessionHelper.CurrentUser.iUserType != "普通用户")
+                    if (CEA_EDU.Web.Utils.SessionHelper.CurrentUser.Type != "普通用户")
                     {
                         <select onchange="ChangeCompany(this.value)" class="form-control" style="width:150px;height:42.9px;float:left;">
                             @{
-                        CEA_EDU.Domain.Manager.DicManager dm = new CEA_EDU.Domain.Manager.DicManager();
-                        foreach (var item in dm.GetDicByType("公司"))
+                        CEA_EDU.Domain.Manager.SysDicManager dm = new CEA_EDU.Domain.Manager.SysDicManager();
+                        foreach (var item in dm.GetDicByParentCode("Company"))
                         {
-                            if (item.iValue == CEA_EDU.Web.Utils.SessionHelper.CurrentUser.iCompanyCode)
+                            if (item.Code == CEA_EDU.Web.Utils.SessionHelper.CurrentUser.Company)
                             {
-                                <option value="@item.iKey" selected="selected">@item.iValue</option>
+                                <option value="@item.Code" selected="selected">@item.Name</option>
                             }
                             else
                             {
-                                <option value="@item.iKey">@item.iValue</option>
+                                <option value="@item.Code">@item.Name</option>
                             }
                         }
                             }
@@ -99,7 +100,7 @@
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <img alt="" src="~/Flatlab/img/avatar1_small.jpg">
-                        <span class="username">@CEA_EDU.Web.Utils.SessionHelper.CurrentUser.iUserName</span>
+                        <span class="username">@CEA_EDU.Web.Utils.SessionHelper.CurrentUser.Name</span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended logout" style="width: 56px !important; min-width: 56px !important">
@@ -109,16 +110,11 @@
                             {
                                 @Html.AntiForgeryToken()
                                 <a href="javascript:document.getElementById('logoutForm').submit()"><i class="icon-key"></i>退出</a>
-
                             }
                         </li>
                     </ul>
-
                 </li>
-
-
             </ul>
-
         </div>
     </header>
     <aside>
@@ -128,7 +124,7 @@
                 @{
                     CEA_EDU.Web.Controllers.ManageController mc = new CEA_EDU.Web.Controllers.ManageController();
                     @Html.Raw(mc.GetMenuHtml(Request.Url.ToString().Replace(Request.Url.PathAndQuery, "") + Request.ApplicationPath))
-                    if (CEA_EDU.Web.Utils.SessionHelper.CurrentUser.iUserType == "超级管理员")
+                    if (CEA_EDU.Web.Utils.SessionHelper.CurrentUser.Type == "超级管理员")
                     {
                         <li class="sub-menu">
                             <a href="javascript:;">
@@ -162,7 +158,7 @@
     </section>
     <footer class="site-footer" style="position:absolute;bottom:0;background:#2a3542">
         <div class="text-center">
-            Copyright <span style="font-family: Arial, Helvetica, sans-serif;">©</span> 2016 上海敏慧劳务派遣有限公司 HRMS
+            Copyright <span style="font-family: Arial, Helvetica, sans-serif;">©</span> 2016 中国东方航空 CEA EDU
         </div>
     </footer>
 

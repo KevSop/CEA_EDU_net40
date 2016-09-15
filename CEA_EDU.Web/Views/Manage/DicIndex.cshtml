@@ -29,16 +29,25 @@
                         </div>
                         <div class="modal-body">
                             <input type="hidden" id="editRowIndex" />
-                            <input type="hidden" id="iId" />
+                            <input type="hidden" id="Id" />
                             <div class="form-group">
-                                类型：<select class="form-control" id="iType">
+                                类型：<select class="form-control" id="Type">
                                          <option value="-">请选择</option>
                                          <option value="公司">公司</option>
                                          <option value="项目">项目</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                名称：<input type="text" class="form-control" id="iValue" placeholder="请输入名称">
+                                Code：<input type="text" class="form-control" id="Code" placeholder="请输入Code">
+                            </div>
+                            <div class="form-group">
+                                ParentCode：<input type="text" class="form-control" id="ParentCode" placeholder="请输入ParentCode">
+                            </div>
+                            <div class="form-group">
+                                名称：<input type="text" class="form-control" id="Name" placeholder="请输入名称">
+                            </div>
+                            <div class="form-group">
+                                值：<input type="text" class="form-control" id="Value" placeholder="请输入值">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -67,9 +76,9 @@
         })
 
         $('#mytab').bootstrapTable({
-            url: "GetAllDics",//数据源
+            url: "../Dictionary/GetAllDics",//数据源
             dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
-            sortName: "iCreatedOn",//排序列
+            sortName: "CreateTime",//排序列
             cache: false,
             striped: true,//條紋行
             clickToSelect: true,//选择行即选择checkbox
@@ -99,30 +108,48 @@
             toolbarAlign: "right",//工具栏对齐方式
             columns: [
                 {
-                    field: "iId",//键名
-                    title: "iId",//标题
+                    field: "ID",//键名
+                    title: "ID",//标题
                     visible: false
                     //sortable: true//是否可排序
                     //order: "desc"//默认排序方式
                 },
                 {
-                    field: "iType",
-                    title: "类型",
+                    field: "Code",
+                    title: "Code",
                     sortable: true
                     //,titleTooltip: "this is tips"
                 },
                 {
-                    field: "iValue",
+                    field: "ParentCode",
+                    title: "ParentCode",
+                    sortable: true
+                    //,titleTooltip: "this is tips"
+                },
+                {
+                    field: "Name",
                     title: "名称",
                     sortable: true
                     //,titleTooltip: "this is tips"
                 },
                 {
-                    field: "iUpdatedOn",
+                    field: "Type",
+                    title: "类型",
+                    sortable: true
+                    //,titleTooltip: "this is tips"
+                },
+                {
+                    field: "Value",
+                    title: "值",
+                    sortable: true
+                    //,titleTooltip: "this is tips"
+                },
+                {
+                    field: "UpdateTime",
                     title: "最近修改时间",
                     sortable: true,
-                    order: "desc"//默认排序方式
-                    //formatter: 'infoFormatter',//对本列数据做格式化
+                    order: "desc",//默认排序方式
+                    formatter: 'dateFormatter',//对本列数据做格式化
                 }
             ],
             onClickRow: function (row, $element) {
@@ -132,13 +159,21 @@
             onDblClickRow: function (row, $element) {
 
                 $("#addModalLabel").html("修改记录");
-                $("#iId").val(row.iId);
-                $("#iType").val(row.iType);
-                $("#iValue").val(row.iValue);
+                $("#ID").val(row.ID);
+                $("#Type").val(row.Type);
+                $("#Code").val(row.Code);
+                $("#ParentCode").val(row.ParentCode);
+                $("#Value").val(row.Value);
+                $("#Name").val(row.Name);
                 $("#editRowIndex").val(this.data.indexOf(row));
-                nodeObj.iId = row.iId;
-                nodeObj.iType = row.iType;
-                nodeObj.iValue = row.iValue;
+                nodeObj.ID = row.ID;
+                nodeObj.Type = row.Type;
+                nodeObj.Value = row.Value;
+                nodeObj.Name = row.Name;
+                nodeObj.Code = row.Code;
+                nodeObj.ParentCode = row.ParentCode;
+
+                $("#Code").attr('disabled', 'true');
 
                 $('#addModal').modal('toggle');
             },
@@ -154,11 +189,23 @@
         });
         //MVVM绑定
         window.nodeObj = {};
-        $('#iType').change(function () {
-            nodeObj.iType = this.value;
+        $('#ID').change(function () {
+            nodeObj.ID = this.value;
         });
-        $('#iValue').change(function () {
-            nodeObj.iValue = this.value;
+        $('#Type').change(function () {
+            nodeObj.Type = this.value;
+        });
+        $('#Value').change(function () {
+            nodeObj.Value = this.value;
+        });
+        $('#Name').change(function () {
+            nodeObj.Name = this.value;
+        });
+        $('#Code').change(function () {
+            nodeObj.Code = this.value;
+        });
+        $('#ParentCode').change(function () {
+            nodeObj.ParentCode = this.value;
         });
         //保存事件
         $("#SaveChanges").click(function () {
@@ -167,7 +214,7 @@
             param.jsonString = JSON.stringify(nodeObj);
             param.action = $("#editRowIndex").val() == "" ? "add" : "update";
             $.ajax({
-                url: "DicsSaveChanges",
+                url: '@Url.Action("DicsSaveChanges", "Dictionary")',
                 type: "POST",
                 data: param,
                 dataType: 'text',
@@ -183,8 +230,12 @@
                             $('#mytab').bootstrapTable('updateRow', {
                                 index: $("#editRowIndex").val(),
                                 row: {
-                                    iType: $("#iType").val(),
-                                    iValue: $("#iValue").val()
+                                    ID: $("#ID").val(),
+                                    Type: $("#Type").val(),
+                                    Code: $("#Code").val(),
+                                    Name: $("#Name").val(),
+                                    ParentCode: $("#ParentCode").val(),
+                                    Value: $("#Value").val()
                                 }
                             });
                         }
@@ -210,10 +261,16 @@
         $("#addModal").find("input[type='text']").each(function () {
             $(this).val("");
         });
-        $("#iType").val("-");
-        nodeObj.iId = "";
-        nodeObj.iValue = "";
-        nodeObj.iType = "-";
+        $("#Type").val("-");
+        nodeObj.ID = "0";
+        nodeObj.Value = "";
+        nodeObj.Name = "";
+        nodeObj.Code = "";
+        nodeObj.ParentCode = "";
+        nodeObj.Type = "-";
+
+        $("#Code").removeAttr('disabled');
+
         $("#addModalLabel").html("添加记录");
     }
 

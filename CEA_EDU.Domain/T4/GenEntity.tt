@@ -1,17 +1,17 @@
 <#@ template debug="true" hostspecific="true" language="C#"  #>
-<#@ output extension=".cs" #>
+<#@ output  extension=".cs" #>
 <#@ assembly name="System.Core"#>
 <#@ import namespace="System"#>
 <#@ import namespace="System.Collections.Generic"#>
 <#@ include file="DBSchema.ttinclude"#>  //../Code/DBSchema.ttinclude
 <#@ include file="MultiDocument.ttinclude"#>
-<# var manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = Path.GetDirectoryName(Host.TemplateFile)}; #>
+<# var manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = Path.GetDirectoryName(Host.TemplateFile) }; #>
 <#
     var dbSchema=DBSchemaFactory.GetDBSchema();
     List<string> tableList=dbSchema.GetTablesList();
     foreach(string tableName in tableList)
     {
-        manager.StartBlock(tableName+"Entity.cs");
+        manager.StartBlock(tableName+"Entity.txt");
         Table table=dbSchema.GetTableMetadata(tableName);
 #>
 using System;

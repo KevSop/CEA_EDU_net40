@@ -12,20 +12,24 @@ namespace CEA_EDU.Domain.Manager
     /// <summary>
     /// 类型管理类
     /// </summary>
-    public class DictionaryManager : ManagerBase
+    public class SysDicManager : ManagerBase
     {
         /// <summary>
         /// 插入一条记录
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public void Insert(DictionaryEntity entity)
+        public void Insert(SysDicEntity entity)
         {
+            entity.Valid = "T";
+            entity.CreateTime = DateTime.Now;
+            entity.UpdateTime = DateTime.Now;
+
             IDbSession session = SessionFactory.CreateSession();
             try
             {
                 session.BeginTrans();
-                Repository.Insert<DictionaryEntity>(session.Connection, entity, session.Transaction);
+                Repository.Insert<SysDicEntity>(session.Connection, entity, session.Transaction);
                 session.Commit();
             }
             catch (System.Exception)
@@ -39,13 +43,15 @@ namespace CEA_EDU.Domain.Manager
             }
         }
 
-        public void Update(DictionaryEntity entity)
+        public void Update(SysDicEntity entity)
         {
+            entity.UpdateTime = DateTime.Now;
+
             IDbSession session = SessionFactory.CreateSession();
             try
             {
                 session.BeginTrans();
-                Repository.Update<DictionaryEntity>(session.Connection, entity, session.Transaction);
+                Repository.Update<SysDicEntity>(session.Connection, entity, session.Transaction);
                 session.Commit();
             }
             catch (System.Exception)
@@ -59,40 +65,46 @@ namespace CEA_EDU.Domain.Manager
             }
         }
 
-        public DictionaryEntity GetDic(int id)
+        public SysDicEntity GetDic(int id)
         {
-            string sql = @"select * from Dictionary where valid = 'T' and id=@id ";
-            return Repository.Query<DictionaryEntity>(sql, new { id = id }).FirstOrDefault();
+            string sql = @"select * from SysDic where valid = 'T' and id=@id ";
+            return Repository.Query<SysDicEntity>(sql, new { id = id }).FirstOrDefault();
         }
 
-        public DictionaryEntity GetDicByCode(string code)
+        public SysDicEntity GetDicByCode(string code)
         {
-            string sql = @"select * from Dictionary where valid = 'T' and code=@code ";
-            return Repository.Query<DictionaryEntity>(sql, new { code = code }).FirstOrDefault();
+            string sql = @"select * from SysDic where valid = 'T' and code=@code ";
+            return Repository.Query<SysDicEntity>(sql, new { code = code }).FirstOrDefault();
         }
 
-        public List<DictionaryEntity> GetDicByName(string name)
+        public List<SysDicEntity> GetDicByParentCode(string parentCode)
         {
-            string sql = @"select * from Dictionary where valid = 'T' and name like '%'+ @name + '%' ";
-            return Repository.Query<DictionaryEntity>(sql, new { name = name }).ToList();
+            string sql = @"select * from SysDic where valid = 'T' and ParentCode=@ParentCode ";
+            return Repository.Query<SysDicEntity>(sql, new { ParentCode = parentCode }).ToList();
         }
 
-        public List<DictionaryEntity> GetDicByType(string type)
+        public List<SysDicEntity> GetDicByName(string name)
         {
-            string sql = @"select * from Dictionary where valid = 'T' and type=@type";
-            return Repository.Query<DictionaryEntity>(sql, new { type = type }).ToList();
+            string sql = @"select * from SysDic where valid = 'T' and name like '%'+ @name + '%' ";
+            return Repository.Query<SysDicEntity>(sql, new { name = name }).ToList();
         }
 
-        public List<DictionaryEntity> GetSearch(string keyString, string sort, string order, int offset, int pageSize, out int total)
+        public List<SysDicEntity> GetDicByType(string type)
+        {
+            string sql = @"select * from SysDic where valid = 'T' and type=@type";
+            return Repository.Query<SysDicEntity>(sql, new { type = type }).ToList();
+        }
+
+        public List<SysDicEntity> GetSearch(string keyString, string sort, string order, int offset, int pageSize, out int total)
         {
             int pageCount = 0;
-            string querySql = string.Format("select * from Dictionary where valid = 'T'  and code like '%{0}%' ", keyString);
+            string querySql = string.Format("select * from SysDic where valid = 'T'  and code like '%{0}%' ", keyString);
             DataTable dt = SplitPage.SqlSplitPage(querySql, string.Format("order by {0} {1}", sort, order), null, offset / pageSize, pageSize, out pageCount, out total);
 
-            List<DictionaryEntity> list = new List<DictionaryEntity>();
+            List<SysDicEntity> list = new List<SysDicEntity>();
             foreach (DataRow dr in dt.Rows)
             {
-                DictionaryEntity entity = new DictionaryEntity();
+                SysDicEntity entity = new SysDicEntity();
 
                 entity.ID = Ext.ToInt(dr["ID"]);
                 entity.Code = Ext.ToString(dr["code"]);

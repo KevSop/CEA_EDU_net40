@@ -23,12 +23,6 @@ namespace CEA_EDU.Web.Controllers
 {
     public class DictionaryController : BaseController
     {
-     
-        public ActionResult DicIndex()
-        {
-            return View();
-        }
-
         public void GetAllDics()
         {
             //用于序列化实体类的对象  
@@ -42,8 +36,8 @@ namespace CEA_EDU.Web.Controllers
             int pageSize = Convert.ToInt32(HttpContext.Request.Params["limit"]);
 
             int total = 0;
-            DictionaryManager dm = new DictionaryManager();
-            List<DictionaryEntity> list = dm.GetSearch(searchKey, sort, order, offset, pageSize, out total);
+            SysDicManager dm = new SysDicManager();
+            List<SysDicEntity> list = dm.GetSearch(searchKey, sort, order, offset, pageSize, out total);
             //List<DicViewModel> listView = new List<DicViewModel>();
             //foreach (var item in list)
             //{
@@ -51,7 +45,7 @@ namespace CEA_EDU.Web.Controllers
             //}
 
             //给分页实体赋值  
-            PageModels<DictionaryEntity> model = new PageModels<DictionaryEntity>();
+            PageModels<SysDicEntity> model = new PageModels<SysDicEntity>();
             model.total = total;
             if (total % pageSize == 0)
                 model.page = total / pageSize;
@@ -66,28 +60,31 @@ namespace CEA_EDU.Web.Controllers
 
         public string DicsSaveChanges(string jsonString, string action)
         {
-
             try
             {
-                DictionaryEntity entity = JsonConvert.DeserializeObject<DictionaryEntity>(jsonString);
-                DictionaryManager dm = new DictionaryManager();
+                SysDicEntity entity = JsonConvert.DeserializeObject<SysDicEntity>(jsonString);
+                SysDicManager dm = new SysDicManager();
                 if (action == "add")
                 {
                     entity.IsDisplay = "T";
-                    entity.CreateBy = SessionHelper.CurrentUser.iUserName;
-                    entity.UpdateBy = SessionHelper.CurrentUser.iUserName;
+                    entity.CreateBy = SessionHelper.CurrentUser.Code;
+                    entity.UpdateBy = SessionHelper.CurrentUser.Code;
 
                     dm.Insert(entity);
                 }
                 else
                 {
-                    DictionaryEntity oldEntity = dm.GetDic(entity.ID);
-                    entity.UpdateBy = SessionHelper.CurrentUser.iUserName;
-                    entity.UpdateTime = DateTime.Now;
-                    entity.CreateTime = oldEntity.CreateTime;
-                    entity.CreateBy = oldEntity.CreateBy;
+                    SysDicEntity oldEntity = dm.GetDic(entity.ID);
 
-                    dm.Update(entity);
+                    oldEntity.Name = entity.Name;
+                    oldEntity.ParentCode = entity.ParentCode;
+                    oldEntity.Value = entity.Value;
+                    oldEntity.Type = entity.Type;
+
+                    oldEntity.UpdateBy = SessionHelper.CurrentUser.Code;
+                    oldEntity.UpdateTime = DateTime.Now;
+
+                    dm.Update(oldEntity);
                 }
                 return "success";
             }

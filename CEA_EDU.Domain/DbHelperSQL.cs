@@ -18,7 +18,7 @@ namespace CEA_EDU.Domain
         //数据库连接字符串(web.config来配置)，可以动态更改connectionString支持多数据库.		
         public static string connectionString
         {
-            get { return ConfigurationManager.ConnectionStrings["HRMSDBConnectionString"].ConnectionString; }
+            get { return ConfigurationManager.ConnectionStrings["ECAEDUConnectionString"].ConnectionString; }
         }
         public DbHelperSQL()
         {

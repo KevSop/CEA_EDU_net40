@@ -43,24 +43,24 @@ namespace CEA_EDU.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login(LoginUserViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            if (model.UserName == "sa" && model.Password == "password")
+            if (model.Code == "sa" && model.Password == "password")
             {
-                UserEntity sa = new UserEntity { iUserName = "超级管理员", iEmployeeCodeId = "sa", iUserType = "超级管理员", iCompanyCode = "上海敏慧" };
+                LoginUserViewModel sa = new LoginUserViewModel { Name = "超级管理员", Code = "sa", Type = "超级管理员", Company = "上海敏慧" };
                 Session[SessionHelper.CurrentUserKey] = sa;
                 return RedirectToLocal(returnUrl);
             }
             else
             {
-                string userName = model.UserName;
+                string code = model.Code;
                 UserManager um = new UserManager();
-                UserEntity ui = um.GetUser(userName);
-                Session[SessionHelper.CurrentUserKey] = ui;
+                UserInfoEntity ui = um.GetUser(code);
+                Session[SessionHelper.CurrentUserKey] = new LoginUserViewModel { Name = ui.Name, Code = ui.Code, Type = ui.Type, Company = ui.Company };
                 if (ui == null)
                 {
                     ModelState.AddModelError("", "用户名不存在!");
@@ -68,7 +68,7 @@ namespace CEA_EDU.Web.Controllers
                 }
                 else
                 {
-                    if (ui.iPassWord == model.Password)
+                    if (ui.Password == model.Password)
                     {
                         return RedirectToLocal(returnUrl);
                     }
