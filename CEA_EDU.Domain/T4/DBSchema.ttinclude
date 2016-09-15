@@ -174,7 +174,7 @@
             List<string> list = new List<string>();
             foreach (Column c in this.Columns)
             {
-                list.Add(string.Format("{0} {1}", c.TypeName, c.LowerColumnName));
+                list.Add(string.Format("{0} {1}", GeneratorHelper.GetQuesMarkByType(c.AllowDBNull, c.TypeName), GeneratorHelper.GetColumnName(c.LowerColumnName)));
             }
             return string.Join(",", list.ToArray());
         }
@@ -236,6 +236,15 @@
                 result += "?";
             }
             return result;
+        }
+
+		public static string GetColumnName(string columnName)
+        {
+            if ("id".Equals(columnName, StringComparison.CurrentCultureIgnoreCase))
+            {
+                return "id";
+            }
+            return columnName;
         }
     }
 

@@ -20,7 +20,6 @@ using System.Text;
 
 namespace CEA_EDU.Domain.Entity
 {
-    [Serializable]
     [Table("<#=tableName#>")]
     public class <#=tableName#>Entity
     {
@@ -33,7 +32,7 @@ namespace CEA_EDU.Domain.Entity
         foreach(Column c in table.Columns)
         {
 #>
-            this.<#=c.LowerColumnName#> = <#=c.LowerColumnName#>;
+            this.<#=GeneratorHelper.GetColumnName(c.LowerColumnName)#> = <#=GeneratorHelper.GetColumnName(c.LowerColumnName)#>;
 <#
         }
 #>
@@ -45,12 +44,12 @@ namespace CEA_EDU.Domain.Entity
         foreach(Column c in table.Columns)
         {
 #>
-        private <#=GeneratorHelper.GetQuesMarkByType(c.AllowDBNull,c.TypeName)#> <#=c.LowerColumnName#>;
+        private <#=GeneratorHelper.GetQuesMarkByType(c.AllowDBNull,c.TypeName)#> <#=GeneratorHelper.GetColumnName(c.LowerColumnName)#>;
 
         public <#=GeneratorHelper.GetQuesMarkByType(c.AllowDBNull,c.TypeName)#> <#=c.UpColumnName#>
         {
-            get { return this.<#=c.LowerColumnName#>; }
-            set { this.<#=c.LowerColumnName#> = value; }
+            get { return this.<#=GeneratorHelper.GetColumnName(c.LowerColumnName)#>; }
+            set { this.<#=GeneratorHelper.GetColumnName(c.LowerColumnName)#> = value; }
         }
 <#
         }

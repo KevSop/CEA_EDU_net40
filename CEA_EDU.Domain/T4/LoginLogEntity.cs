@@ -4,16 +4,15 @@ using System.Text;
 
 namespace CEA_EDU.Domain.Entity
 {
-    [Serializable]
     [Table("LoginLog")]
     public class LoginLogEntity
     {
         #region Constructor
         public LoginLogEntity() { }
 
-        public LoginLogEntity(Int32 iD,String type,Int32 loginID,String loginType,String name,String action,DateTime timeRecord,String remark,String loginIP,String loginIP2,DateTime createTime,DateTime updateTime)
+        public LoginLogEntity(Int32 id,String type,Int32 loginID,String loginType,String name,String action,DateTime? timeRecord,String remark,String loginIP,String loginIP2,DateTime createTime,DateTime updateTime)
         {
-            this.iD = iD;
+            this.id = id;
             this.type = type;
             this.loginID = loginID;
             this.loginType = loginType;
@@ -29,12 +28,12 @@ namespace CEA_EDU.Domain.Entity
         #endregion
 
         #region Attributes
-        private Int32 iD;
+        private Int32 id;
 
         public Int32 ID
         {
-            get { return this.iD; }
-            set { this.iD = value; }
+            get { return this.id; }
+            set { this.id = value; }
         }
         private String type;
 

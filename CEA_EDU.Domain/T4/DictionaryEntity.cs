@@ -4,16 +4,15 @@ using System.Text;
 
 namespace CEA_EDU.Domain.Entity
 {
-    [Serializable]
     [Table("Dictionary")]
     public class DictionaryEntity
     {
         #region Constructor
         public DictionaryEntity() { }
 
-        public DictionaryEntity(Int32 iD,String code,String name,String parentCode,String type,String value,Int32 sortValue,String description,String isDisplay,String valid,DateTime createTime,String createBy,DateTime updateTime,String updateBy)
+        public DictionaryEntity(Int32 id,String code,String name,String parentCode,String type,String value,Int32? sortValue,String description,String isDisplay,String valid,DateTime createTime,String createBy,DateTime updateTime,String updateBy)
         {
-            this.iD = iD;
+            this.id = id;
             this.code = code;
             this.name = name;
             this.parentCode = parentCode;
@@ -31,12 +30,12 @@ namespace CEA_EDU.Domain.Entity
         #endregion
 
         #region Attributes
-        private Int32 iD;
+        private Int32 id;
 
         public Int32 ID
         {
-            get { return this.iD; }
-            set { this.iD = value; }
+            get { return this.id; }
+            set { this.id = value; }
         }
         private String code;
 

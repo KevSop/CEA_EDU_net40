@@ -4,16 +4,15 @@ using System.Text;
 
 namespace CEA_EDU.Domain.Entity
 {
-    [Serializable]
     [Table("StudentClassHistory")]
     public class StudentClassHistoryEntity
     {
         #region Constructor
         public StudentClassHistoryEntity() { }
 
-        public StudentClassHistoryEntity(Int32 iD,Int32 studentID,Int32 arrangeClassID,DateTime startTime,DateTime endTime,Int32 score,String isAttend,String isPass,String remark,String valid,DateTime createTime,String createBy,DateTime updateTime,String updateBy)
+        public StudentClassHistoryEntity(Int32 id,Int32 studentID,Int32 arrangeClassID,DateTime? startTime,DateTime? endTime,Int32? score,String isAttend,String isPass,String remark,String valid,DateTime createTime,String createBy,DateTime updateTime,String updateBy)
         {
-            this.iD = iD;
+            this.id = id;
             this.studentID = studentID;
             this.arrangeClassID = arrangeClassID;
             this.startTime = startTime;
@@ -31,12 +30,12 @@ namespace CEA_EDU.Domain.Entity
         #endregion
 
         #region Attributes
-        private Int32 iD;
+        private Int32 id;
 
         public Int32 ID
         {
-            get { return this.iD; }
-            set { this.iD = value; }
+            get { return this.id; }
+            set { this.id = value; }
         }
         private Int32 studentID;
 

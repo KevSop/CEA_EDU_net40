@@ -4,14 +4,13 @@ using System.Text;
 
 namespace CEA_EDU.Domain.Entity
 {
-    [Serializable]
     [Table("ClassInfo")]
     public class ClassInfoEntity
     {
         #region Constructor
         public ClassInfoEntity() { }
 
-        public ClassInfoEntity(Int32 classID,String code,String name,String type,DateTime startTime,DateTime endTime,Int32 teacherID,String company,String department,String remark,String valid,DateTime createTime,String createBy,DateTime updateTime,String updateBy)
+        public ClassInfoEntity(Int32 classID,String code,String name,String type,DateTime? startTime,DateTime? endTime,Int32? teacherID,String company,String department,String remark,String valid,DateTime createTime,String createBy,DateTime updateTime,String updateBy)
         {
             this.classID = classID;
             this.code = code;

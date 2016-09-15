@@ -73,7 +73,7 @@ namespace CEA_EDU.Domain.Manager
 
         public List<DictionaryEntity> GetDicByName(string name)
         {
-            string sql = @"select * from Dictionary where valid = 'T' and name='%'+ @name + '%' ";
+            string sql = @"select * from Dictionary where valid = 'T' and name like '%'+ @name + '%' ";
             return Repository.Query<DictionaryEntity>(sql, new { name = name }).ToList();
         }
 
