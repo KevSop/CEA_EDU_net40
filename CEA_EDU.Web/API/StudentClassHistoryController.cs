@@ -20,34 +20,28 @@ using Newtonsoft.Json.Linq;
 
 namespace CEA_EDU.Web.API
 {
-    public class DictionaryController : ApiController
+    public class StudentClassHistoryController : ApiController
     {
-        public string GetDicByID(int id)
+        public string GetStudentClassHistoryByID(int id)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByID(id));
+            StudentClassHistoryManager manager = new StudentClassHistoryManager();
+            return new JavaScriptSerializer().Serialize(manager.GetStudentClassHistoryByID(id));
         }
 
-        public string GetDicByCode(string code)
+        public string GetStudentClassHistoryByStudentID(int studentID)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByCode(code));
+            StudentClassHistoryManager manager = new StudentClassHistoryManager();
+            return new JavaScriptSerializer().Serialize(manager.GetStudentClassHistoryByStudentID(studentID));
         }
 
-        public string GetDicByName(string name)
-        {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByName(name));
-        }
-
-        public string GetAllDics(string order, string sort, string searchKey, int offset, int pageSize)
+        public string GetAll(string order, string sort, string searchKey, int offset, int pageSize)
         {
             int total = 0;
-            SysDicManager manager = new SysDicManager();
-            List<SysDicEntity> list = manager.GetSearch(searchKey, sort, order, offset, pageSize, out total);
+            StudentClassHistoryManager manager = new StudentClassHistoryManager();
+            List<StudentClassHistoryEntity> list = manager.GetSearch(sort, order, offset, pageSize, out total);
 
             //给分页实体赋值  
-            PageModels<SysDicEntity> model = new PageModels<SysDicEntity>();
+            PageModels<StudentClassHistoryEntity> model = new PageModels<StudentClassHistoryEntity>();
             model.total = total;
             if (total % pageSize == 0)
                 model.page = total / pageSize;
@@ -60,20 +54,17 @@ namespace CEA_EDU.Web.API
             return new JavaScriptSerializer().Serialize(model);
         }
 
-        public string PostDic(SysDicEntity entity)
+        public string PostStudentClassHistory(StudentClassHistoryEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
-                if (entity == null)
+                if (entity == null || entity.ArrangeClassID <= 0 || entity.StudentID <= 0)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                StudentClassHistoryManager manager = new StudentClassHistoryManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -87,20 +78,17 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string PutDic(SysDicEntity entity)
+        public string PutStudentClassHistory(StudentClassHistoryEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
                 if (entity == null)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                StudentClassHistoryManager manager = new StudentClassHistoryManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -114,15 +102,13 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string DeleteDic(int id)
+        public string DeleteStudentClassHistory(int id)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
+                StudentClassHistoryManager manager = new StudentClassHistoryManager();
 
-                SysDicManager manager = new SysDicManager();
-
-                SysDicEntity entity = manager.GetDicByID(id);
+                StudentClassHistoryEntity entity = manager.GetStudentClassHistoryByID(id);
                 if (entity != null)
                 {
                     entity.Valid = "F";

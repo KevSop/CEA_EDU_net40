@@ -147,6 +147,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\ArrangeClassController.cs" />
+    <Compile Include="API\ClassInfoController.cs" />
+    <Compile Include="API\ClassRoomInfoController.cs" />
+    <Compile Include="API\CompanyInfoController.cs" />
+    <Compile Include="API\ClassStudentMapController.cs" />
+    <Compile Include="API\UserController.cs" />
+    <Compile Include="API\StudentClassHistoryController.cs" />
+    <Compile Include="API\CurriculumInfoController.cs" />
+    <Compile Include="API\SchoolInfoController.cs" />
     <Compile Include="API\DictionaryController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

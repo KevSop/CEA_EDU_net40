@@ -10,16 +10,16 @@ using CEA_EDU.Common.Extend;
 namespace CEA_EDU.Domain.Manager
 {
     /// <summary>
-    /// 字典管理类
+    /// 公司信息管理类
     /// </summary>
-    public class SysDicManager : ManagerBase
+    public class CompanyInfoManager : ManagerBase
     {
         /// <summary>
         /// 插入一条记录
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public void Insert(SysDicEntity entity)
+        public void Insert(CompanyInfoEntity entity)
         {
             entity.Valid = "T";
             entity.CreateTime = DateTime.Now;
@@ -29,7 +29,7 @@ namespace CEA_EDU.Domain.Manager
             try
             {
                 session.BeginTrans();
-                Repository.Insert<SysDicEntity>(session.Connection, entity, session.Transaction);
+                Repository.Insert<CompanyInfoEntity>(session.Connection, entity, session.Transaction);
                 session.Commit();
             }
             catch (System.Exception)
@@ -43,7 +43,7 @@ namespace CEA_EDU.Domain.Manager
             }
         }
 
-        public void Update(SysDicEntity entity)
+        public void Update(CompanyInfoEntity entity)
         {
             entity.UpdateTime = DateTime.Now;
 
@@ -51,7 +51,7 @@ namespace CEA_EDU.Domain.Manager
             try
             {
                 session.BeginTrans();
-                Repository.Update<SysDicEntity>(session.Connection, entity, session.Transaction);
+                Repository.Update<CompanyInfoEntity>(session.Connection, entity, session.Transaction);
                 session.Commit();
             }
             catch (System.Exception)
@@ -65,56 +65,42 @@ namespace CEA_EDU.Domain.Manager
             }
         }
 
-        public SysDicEntity GetDicByID(int id)
+        public CompanyInfoEntity GetCompanyInfoByID(int id)
         {
-            string sql = @"select * from SysDic where valid = 'T' and id=@id ";
-            return Repository.Query<SysDicEntity>(sql, new { id = id }).FirstOrDefault();
+            string sql = @"select * from CompanyInfo where valid = 'T' and id=@id ";
+            return Repository.Query<CompanyInfoEntity>(sql, new { id = id }).FirstOrDefault();
         }
 
-        public SysDicEntity GetDicByCode(string code)
+        public CompanyInfoEntity GetCompanyInfoByCode(string code)
         {
-            string sql = @"select * from SysDic where valid = 'T' and code=@code ";
-            return Repository.Query<SysDicEntity>(sql, new { code = code }).FirstOrDefault();
+            string sql = @"select * from CompanyInfo where valid = 'T' and code=@code ";
+            return Repository.Query<CompanyInfoEntity>(sql, new { code = code }).FirstOrDefault();
         }
 
-        public List<SysDicEntity> GetDicByParentCode(string parentCode)
+        public List<CompanyInfoEntity> GetCompanyInfoByName(string name)
         {
-            string sql = @"select * from SysDic where valid = 'T' and ParentCode=@ParentCode ";
-            return Repository.Query<SysDicEntity>(sql, new { ParentCode = parentCode }).ToList();
+            string sql = @"select * from CompanyInfo where valid = 'T' and name like '%'+ @name + '%' ";
+            return Repository.Query<CompanyInfoEntity>(sql, new { name = name }).ToList();
         }
 
-        public List<SysDicEntity> GetDicByName(string name)
-        {
-            string sql = @"select * from SysDic where valid = 'T' and name like '%'+ @name + '%' ";
-            return Repository.Query<SysDicEntity>(sql, new { name = name }).ToList();
-        }
-
-        public List<SysDicEntity> GetDicByType(string type)
-        {
-            string sql = @"select * from SysDic where valid = 'T' and type=@type";
-            return Repository.Query<SysDicEntity>(sql, new { type = type }).ToList();
-        }
-
-        public List<SysDicEntity> GetSearch(string keyString, string sort, string order, int offset, int pageSize, out int total)
+        public List<CompanyInfoEntity> GetSearch(string keyString, string sort, string order, int offset, int pageSize, out int total)
         {
             int pageCount = 0;
-            string querySql = string.Format("select * from SysDic where valid = 'T'  and (code like '%{0}%' or name like '%{0}%') ", keyString);
+            string querySql = string.Format("select * from CompanyInfo where valid = 'T'  and (code like '%{0}%' or name like '%{0}%')", keyString);
             DataTable dt = SplitPage.SqlSplitPage(querySql, string.Format("order by {0} {1}", sort, order), null, offset / pageSize, pageSize, out pageCount, out total);
 
-            List<SysDicEntity> list = new List<SysDicEntity>();
+            List<CompanyInfoEntity> list = new List<CompanyInfoEntity>();
             foreach (DataRow dr in dt.Rows)
             {
-                SysDicEntity entity = new SysDicEntity();
+                CompanyInfoEntity entity = new CompanyInfoEntity();
 
                 entity.ID = Ext.ToInt(dr["ID"]);
                 entity.Code = Ext.ToString(dr["Code"]);
                 entity.Name = Ext.ToString(dr["Name"]);
-                entity.ParentCode = Ext.ToString(dr["ParentCode"]);
-                entity.Type = Ext.ToString(dr["Type"]);
-                entity.Value = Ext.ToString(dr["Value"]);
-                entity.SortValue = Ext.ToInt(dr["SortValue"]);
+                entity.Address = Ext.ToString(dr["Address"]);
                 entity.Description = Ext.ToString(dr["Description"]);
-                entity.IsDisplay = Ext.ToString(dr["IsDisplay"]);
+                entity.Remark = Ext.ToString(dr["Remark"]);
+                entity.Valid = Ext.ToString(dr["Valid"]);
                 entity.CreateTime = Ext.ToDate(dr["CreateTime"]);
                 entity.CreateBy = Ext.ToString(dr["CreateBy"]);
                 entity.UpdateTime = Ext.ToDate(dr["UpdateTime"]);

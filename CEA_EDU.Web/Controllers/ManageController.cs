@@ -116,7 +116,7 @@ namespace CEA_EDU.Web.Controllers
                 }
                 else
                 {
-                    UserInfoEntity ueOld = pm.GetUser(ue.Code);
+                    UserInfoEntity ueOld = pm.GetUserByCode(ue.Code);
                     ueOld.Name = ue.Name;
                     ueOld.Type = ue.Type;
                     ueOld.Company = ue.Company;
@@ -349,6 +349,120 @@ namespace CEA_EDU.Web.Controllers
             return sb.ToString();
         }
         #endregion
-        
+
+        #region 登录日志方法
+
+        public void GetLoginLogs(string jsonString)
+        {
+            //用于序列化实体类的对象  
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+
+            //查询条件
+            LoginLogEntity entity = JsonConvert.DeserializeObject<LoginLogEntity>(jsonString);
+
+            //请求中携带的条件  
+            string order = HttpContext.Request.Params["order"];
+            string sort = HttpContext.Request.Params["sort"];
+            int offset = Convert.ToInt32(HttpContext.Request.Params["offset"]);  //0
+            int pageSize = Convert.ToInt32(HttpContext.Request.Params["limit"]);
+
+            StringBuilder sbCondition = new StringBuilder();
+            if (entity != null)
+            {
+                sbCondition.Append(" where 1 = 1");
+
+                if (!string.IsNullOrWhiteSpace(entity.Type))
+                {
+                    sbCondition.Append(string.Format(" and Type = '{0}'", entity.Type));
+                }
+
+                if (!string.IsNullOrWhiteSpace(entity.Guid))
+                {
+                    sbCondition.Append(string.Format(" and Guid = '{0}'", entity.Guid));
+                }
+
+                if (entity.LoginID > 0)
+                {
+                    sbCondition.Append(string.Format(" and LoginID = {0}", entity.LoginID));
+                }
+
+                if (!string.IsNullOrWhiteSpace(entity.LoginName))
+                {
+                    sbCondition.Append(string.Format(" and LoginName = '{0}'", entity.LoginName));
+                }
+
+                if (!string.IsNullOrWhiteSpace(entity.LoginType))
+                {
+                    sbCondition.Append(string.Format(" and LoginType = '{0}'", entity.LoginType));
+                }
+
+                if (!string.IsNullOrWhiteSpace(entity.Action))
+                {
+                    sbCondition.Append(string.Format(" and Action = '{0}'", entity.Action));
+                }
+
+                if (entity.StartTime != null)
+                {
+                    sbCondition.Append(string.Format(" and TimeRecord >= '{0}'", entity.StartTime));
+                }
+
+                if (entity.EndTime != null)
+                {
+                    sbCondition.Append(string.Format(" and TimeRecord <= '{0}'", entity.EndTime));
+                }
+            }
+            
+            int total = 0;
+            LoginLogManager manager = new LoginLogManager();
+            List<LoginLogEntity> list = manager.GetSearch(sbCondition.ToString(), sort, order, offset, pageSize, out total);
+
+            //给分页实体赋值  
+            PageModels<LoginLogEntity> model = new PageModels<LoginLogEntity>();
+            model.total = total;
+            if (total % pageSize == 0)
+                model.page = total / pageSize;
+            else
+                model.page = (total / pageSize) + 1;
+
+            model.rows = list;
+
+            //将查询结果返回  
+            HttpContext.Response.Write(jss.Serialize(model));
+        }
+
+        public string LoginLogSaveChanges(string jsonString, string action)
+        {
+            try
+            {
+                LoginLogEntity entity = JsonConvert.DeserializeObject<LoginLogEntity>(jsonString);
+                LoginLogManager manager = new LoginLogManager();
+                if (action == "add")
+                {
+                    if (entity == null)
+                    {
+                        return "error";
+                    }
+
+                    manager.Insert(entity);
+                }
+                else
+                {
+                    LoginLogEntity oldEntity = manager.GetLoginLogByGuid(entity.Guid);
+                    
+                    oldEntity.StartTime = entity.StartTime;
+                    oldEntity.EndTime = entity.EndTime;
+
+                    manager.Update(oldEntity);
+                }
+                return "success";
+            }
+            catch (Exception e)
+            {
+                return e.ToString();
+            }
+        }
+
+        #endregion
+
     }
 }

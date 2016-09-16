@@ -72,10 +72,10 @@ namespace CEA_EDU.Domain.Entity
                 validatorResult = false;
                 this.ErrorList.Add("The MenuRights should not be empty!");
             }
-            if (this.MenuRights != null && 1 < this.MenuRights.Length)
+            if (this.MenuRights != null && 50 < this.MenuRights.Length)
             {
                 validatorResult = false;
-                this.ErrorList.Add("The length of MenuRights should not be greater then 1!");
+                this.ErrorList.Add("The length of MenuRights should not be greater then 50!");
             }
             return validatorResult;
         }    

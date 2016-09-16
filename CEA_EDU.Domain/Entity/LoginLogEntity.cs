@@ -10,18 +10,22 @@ namespace CEA_EDU.Domain.Entity
         #region Constructor
         public LoginLogEntity() { }
 
-        public LoginLogEntity(Int32 id,String type,Int32 loginID,String loginType,String name,String action,DateTime? timeRecord,String remark,String loginIP,String loginIP2,DateTime createTime,DateTime updateTime)
+        public LoginLogEntity(Int32 id, String guid, String type, Int32 loginID, String loginName, String loginType, String action, DateTime? timeRecord, String remark, String machineID, String loginIP, String loginIP2, DateTime? startTime, DateTime? endTime, DateTime createTime, DateTime updateTime)
         {
             this.id = id;
+            this.guid = guid;
             this.type = type;
             this.loginID = loginID;
+            this.loginName = loginName;
             this.loginType = loginType;
-            this.name = name;
             this.action = action;
             this.timeRecord = timeRecord;
             this.remark = remark;
+            this.machineID = machineID;
             this.loginIP = loginIP;
             this.loginIP2 = loginIP2;
+            this.startTime = startTime;
+            this.endTime = endTime;
             this.createTime = createTime;
             this.updateTime = updateTime;
         }
@@ -34,6 +38,13 @@ namespace CEA_EDU.Domain.Entity
         {
             get { return this.id; }
             set { this.id = value; }
+        }
+        private String guid;
+
+        public String Guid
+        {
+            get { return this.guid; }
+            set { this.guid = value; }
         }
         private String type;
 
@@ -49,19 +60,19 @@ namespace CEA_EDU.Domain.Entity
             get { return this.loginID; }
             set { this.loginID = value; }
         }
+        private String loginName;
+
+        public String LoginName
+        {
+            get { return this.loginName; }
+            set { this.loginName = value; }
+        }
         private String loginType;
 
         public String LoginType
         {
             get { return this.loginType; }
             set { this.loginType = value; }
-        }
-        private String name;
-
-        public String Name
-        {
-            get { return this.name; }
-            set { this.name = value; }
         }
         private String action;
 
@@ -84,6 +95,13 @@ namespace CEA_EDU.Domain.Entity
             get { return this.remark; }
             set { this.remark = value; }
         }
+        private String machineID;
+
+        public String MachineID
+        {
+            get { return this.machineID; }
+            set { this.machineID = value; }
+        }
         private String loginIP;
 
         public String LoginIP
@@ -97,6 +115,20 @@ namespace CEA_EDU.Domain.Entity
         {
             get { return this.loginIP2; }
             set { this.loginIP2 = value; }
+        }
+        private DateTime? startTime;
+
+        public DateTime? StartTime
+        {
+            get { return this.startTime; }
+            set { this.startTime = value; }
+        }
+        private DateTime? endTime;
+
+        public DateTime? EndTime
+        {
+            get { return this.endTime; }
+            set { this.endTime = value; }
         }
         private DateTime createTime;
 
@@ -117,17 +149,32 @@ namespace CEA_EDU.Domain.Entity
         #region Validator
         public List<string> ErrorList = new List<string>();
         private bool Validator()
-        {    
+        {
             bool validatorResult = true;
+            if (this.Guid != null && 50 < this.Guid.Length)
+            {
+                validatorResult = false;
+                this.ErrorList.Add("The length of Guid should not be greater then 50!");
+            }
             if (string.IsNullOrEmpty(this.Type))
             {
                 validatorResult = false;
                 this.ErrorList.Add("The Type should not be empty!");
             }
-            if (this.Type != null && 100 < this.Type.Length)
+            if (this.Type != null && 20 < this.Type.Length)
             {
                 validatorResult = false;
-                this.ErrorList.Add("The length of Type should not be greater then 100!");
+                this.ErrorList.Add("The length of Type should not be greater then 20!");
+            }
+            if (string.IsNullOrEmpty(this.LoginName))
+            {
+                validatorResult = false;
+                this.ErrorList.Add("The LoginName should not be empty!");
+            }
+            if (this.LoginName != null && 255 < this.LoginName.Length)
+            {
+                validatorResult = false;
+                this.ErrorList.Add("The length of LoginName should not be greater then 255!");
             }
             if (string.IsNullOrEmpty(this.LoginType))
             {
@@ -139,16 +186,6 @@ namespace CEA_EDU.Domain.Entity
                 validatorResult = false;
                 this.ErrorList.Add("The length of LoginType should not be greater then 20!");
             }
-            if (string.IsNullOrEmpty(this.Name))
-            {
-                validatorResult = false;
-                this.ErrorList.Add("The Name should not be empty!");
-            }
-            if (this.Name != null && 255 < this.Name.Length)
-            {
-                validatorResult = false;
-                this.ErrorList.Add("The length of Name should not be greater then 255!");
-            }
             if (this.Action != null && 100 < this.Action.Length)
             {
                 validatorResult = false;
@@ -159,38 +196,33 @@ namespace CEA_EDU.Domain.Entity
                 validatorResult = false;
                 this.ErrorList.Add("The length of Remark should not be greater then 500!");
             }
-            if (string.IsNullOrEmpty(this.LoginIP))
+            if (this.MachineID != null && 50 < this.MachineID.Length)
             {
                 validatorResult = false;
-                this.ErrorList.Add("The LoginIP should not be empty!");
+                this.ErrorList.Add("The length of MachineID should not be greater then 50!");
             }
-            if (this.LoginIP != null && 255 < this.LoginIP.Length)
+            if (this.LoginIP != null && 50 < this.LoginIP.Length)
             {
                 validatorResult = false;
-                this.ErrorList.Add("The length of LoginIP should not be greater then 255!");
+                this.ErrorList.Add("The length of LoginIP should not be greater then 50!");
             }
-            if (string.IsNullOrEmpty(this.LoginIP2))
+            if (this.LoginIP2 != null && 50 < this.LoginIP2.Length)
             {
                 validatorResult = false;
-                this.ErrorList.Add("The LoginIP2 should not be empty!");
+                this.ErrorList.Add("The length of LoginIP2 should not be greater then 50!");
             }
-            if (this.LoginIP2 != null && 255 < this.LoginIP2.Length)
-            {
-                validatorResult = false;
-                this.ErrorList.Add("The length of LoginIP2 should not be greater then 255!");
-            }
-            if (this.CreateTime==null)
+            if (this.CreateTime == null)
             {
                 validatorResult = false;
                 this.ErrorList.Add("The CreateTime should not be empty!");
             }
-            if (this.UpdateTime==null)
+            if (this.UpdateTime == null)
             {
                 validatorResult = false;
                 this.ErrorList.Add("The UpdateTime should not be empty!");
             }
             return validatorResult;
-        }    
+        }
         #endregion
     }
 }

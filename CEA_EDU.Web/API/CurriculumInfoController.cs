@@ -20,34 +20,34 @@ using Newtonsoft.Json.Linq;
 
 namespace CEA_EDU.Web.API
 {
-    public class DictionaryController : ApiController
+    public class CurriculumInfoController : ApiController
     {
-        public string GetDicByID(int id)
+        public string GetCurriculumInfoByID(int id)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByID(id));
+            CurriculumInfoManager manager = new CurriculumInfoManager();
+            return new JavaScriptSerializer().Serialize(manager.GetCurriculumInfoByID(id));
         }
 
-        public string GetDicByCode(string code)
+        public string GetCurriculumInfoByCode(string code)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByCode(code));
+            CurriculumInfoManager manager = new CurriculumInfoManager();
+            return new JavaScriptSerializer().Serialize(manager.GetCurriculumInfoByCode(code));
         }
 
-        public string GetDicByName(string name)
+        public string GetCurriculumInfoByName(string name)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByName(name));
+            CurriculumInfoManager manager = new CurriculumInfoManager();
+            return new JavaScriptSerializer().Serialize(manager.GetCurriculumInfoByName(name));
         }
 
-        public string GetAllDics(string order, string sort, string searchKey, int offset, int pageSize)
+        public string GetAll(string order, string sort, string searchKey, int offset, int pageSize)
         {
             int total = 0;
-            SysDicManager manager = new SysDicManager();
-            List<SysDicEntity> list = manager.GetSearch(searchKey, sort, order, offset, pageSize, out total);
+            CurriculumInfoManager manager = new CurriculumInfoManager();
+            List<CurriculumInfoEntity> list = manager.GetSearch(searchKey, sort, order, offset, pageSize, out total);
 
             //给分页实体赋值  
-            PageModels<SysDicEntity> model = new PageModels<SysDicEntity>();
+            PageModels<CurriculumInfoEntity> model = new PageModels<CurriculumInfoEntity>();
             model.total = total;
             if (total % pageSize == 0)
                 model.page = total / pageSize;
@@ -60,20 +60,17 @@ namespace CEA_EDU.Web.API
             return new JavaScriptSerializer().Serialize(model);
         }
 
-        public string PostDic(SysDicEntity entity)
+        public string PostCurriculumInfo(CurriculumInfoEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
                 if (entity == null)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                CurriculumInfoManager manager = new CurriculumInfoManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -87,20 +84,17 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string PutDic(SysDicEntity entity)
+        public string PutCurriculumInfo(CurriculumInfoEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
                 if (entity == null)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                CurriculumInfoManager manager = new CurriculumInfoManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -114,15 +108,13 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string DeleteDic(int id)
+        public string DeleteCurriculumInfo(int id)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
+                CurriculumInfoManager manager = new CurriculumInfoManager();
 
-                SysDicManager manager = new SysDicManager();
-
-                SysDicEntity entity = manager.GetDicByID(id);
+                CurriculumInfoEntity entity = manager.GetCurriculumInfoByID(id);
                 if (entity != null)
                 {
                     entity.Valid = "F";

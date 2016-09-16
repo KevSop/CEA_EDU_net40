@@ -74,7 +74,7 @@ namespace CEA_EDU.Web.Controllers
                 }
                 else
                 {
-                    SysDicEntity oldEntity = dm.GetDic(entity.ID);
+                    SysDicEntity oldEntity = dm.GetDicByID(entity.ID);
 
                     oldEntity.Name = entity.Name;
                     oldEntity.ParentCode = entity.ParentCode;

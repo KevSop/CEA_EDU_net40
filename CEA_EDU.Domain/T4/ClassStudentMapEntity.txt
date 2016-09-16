@@ -10,7 +10,7 @@ namespace CEA_EDU.Domain.Entity
         #region Constructor
         public ClassStudentMapEntity() { }
 
-        public ClassStudentMapEntity(Int32 id,Int32? classID,Int32? studentID,String valid,DateTime createTime,String createBy,DateTime updateTime,String updateBy)
+        public ClassStudentMapEntity(Int32 id,Int32 classID,Int32 studentID,String valid,DateTime createTime,String createBy,DateTime updateTime,String updateBy)
         {
             this.id = id;
             this.classID = classID;
@@ -31,16 +31,16 @@ namespace CEA_EDU.Domain.Entity
             get { return this.id; }
             set { this.id = value; }
         }
-        private Int32? classID;
+        private Int32 classID;
 
-        public Int32? ClassID
+        public Int32 ClassID
         {
             get { return this.classID; }
             set { this.classID = value; }
         }
-        private Int32? studentID;
+        private Int32 studentID;
 
-        public Int32? StudentID
+        public Int32 StudentID
         {
             get { return this.studentID; }
             set { this.studentID = value; }

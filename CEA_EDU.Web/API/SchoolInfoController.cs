@@ -20,34 +20,34 @@ using Newtonsoft.Json.Linq;
 
 namespace CEA_EDU.Web.API
 {
-    public class DictionaryController : ApiController
+    public class SchoolInfoController : ApiController
     {
-        public string GetDicByID(int id)
+        public string GetSchoolInfoByID(int id)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByID(id));
+            SchoolInfoManager manager = new SchoolInfoManager();
+            return new JavaScriptSerializer().Serialize(manager.GetSchoolInfoByID(id));
         }
 
-        public string GetDicByCode(string code)
+        public string GetSchoolInfoByCode(string code)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByCode(code));
+            SchoolInfoManager manager = new SchoolInfoManager();
+            return new JavaScriptSerializer().Serialize(manager.GetSchoolInfoByCode(code));
         }
 
-        public string GetDicByName(string name)
+        public string GetSchoolInfoByName(string name)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByName(name));
+            SchoolInfoManager manager = new SchoolInfoManager();
+            return new JavaScriptSerializer().Serialize(manager.GetSchoolInfoByName(name));
         }
 
-        public string GetAllDics(string order, string sort, string searchKey, int offset, int pageSize)
+        public string GetAll(string order, string sort, string searchKey, int offset, int pageSize)
         {
             int total = 0;
-            SysDicManager manager = new SysDicManager();
-            List<SysDicEntity> list = manager.GetSearch(searchKey, sort, order, offset, pageSize, out total);
+            SchoolInfoManager manager = new SchoolInfoManager();
+            List<SchoolInfoEntity> list = manager.GetSearch(searchKey, sort, order, offset, pageSize, out total);
 
             //给分页实体赋值  
-            PageModels<SysDicEntity> model = new PageModels<SysDicEntity>();
+            PageModels<SchoolInfoEntity> model = new PageModels<SchoolInfoEntity>();
             model.total = total;
             if (total % pageSize == 0)
                 model.page = total / pageSize;
@@ -60,20 +60,17 @@ namespace CEA_EDU.Web.API
             return new JavaScriptSerializer().Serialize(model);
         }
 
-        public string PostDic(SysDicEntity entity)
+        public string PostSchoolInfo(SchoolInfoEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
                 if (entity == null)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                SchoolInfoManager manager = new SchoolInfoManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -87,20 +84,17 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string PutDic(SysDicEntity entity)
+        public string PutSchoolInfo(SchoolInfoEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
                 if (entity == null)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                SchoolInfoManager manager = new SchoolInfoManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -114,15 +108,13 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string DeleteDic(int id)
+        public string DeleteSchoolInfo(int id)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
+                SchoolInfoManager manager = new SchoolInfoManager();
 
-                SysDicManager manager = new SysDicManager();
-
-                SysDicEntity entity = manager.GetDicByID(id);
+                SchoolInfoEntity entity = manager.GetSchoolInfoByID(id);
                 if (entity != null)
                 {
                     entity.Valid = "F";

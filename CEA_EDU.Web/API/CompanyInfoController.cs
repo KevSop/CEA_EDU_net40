@@ -20,34 +20,34 @@ using Newtonsoft.Json.Linq;
 
 namespace CEA_EDU.Web.API
 {
-    public class DictionaryController : ApiController
+    public class CompanyInfoController : ApiController
     {
-        public string GetDicByID(int id)
+        public string GetCompanyInfoByID(int id)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByID(id));
+            CompanyInfoManager manager = new CompanyInfoManager();
+            return new JavaScriptSerializer().Serialize(manager.GetCompanyInfoByID(id));
         }
 
-        public string GetDicByCode(string code)
+        public string GetCompanyInfoByCode(string code)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByCode(code));
+            CompanyInfoManager manager = new CompanyInfoManager();
+            return new JavaScriptSerializer().Serialize(manager.GetCompanyInfoByCode(code));
         }
 
-        public string GetDicByName(string name)
+        public string GetCompanyInfoByName(string name)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByName(name));
+            CompanyInfoManager manager = new CompanyInfoManager();
+            return new JavaScriptSerializer().Serialize(manager.GetCompanyInfoByName(name));
         }
 
-        public string GetAllDics(string order, string sort, string searchKey, int offset, int pageSize)
+        public string GetAll(string order, string sort, string searchKey, int offset, int pageSize)
         {
             int total = 0;
-            SysDicManager manager = new SysDicManager();
-            List<SysDicEntity> list = manager.GetSearch(searchKey, sort, order, offset, pageSize, out total);
+            CompanyInfoManager manager = new CompanyInfoManager();
+            List<CompanyInfoEntity> list = manager.GetSearch(searchKey, sort, order, offset, pageSize, out total);
 
             //给分页实体赋值  
-            PageModels<SysDicEntity> model = new PageModels<SysDicEntity>();
+            PageModels<CompanyInfoEntity> model = new PageModels<CompanyInfoEntity>();
             model.total = total;
             if (total % pageSize == 0)
                 model.page = total / pageSize;
@@ -60,20 +60,17 @@ namespace CEA_EDU.Web.API
             return new JavaScriptSerializer().Serialize(model);
         }
 
-        public string PostDic(SysDicEntity entity)
+        public string PostCompanyInfo(CompanyInfoEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
                 if (entity == null)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                CompanyInfoManager manager = new CompanyInfoManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -87,20 +84,17 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string PutDic(SysDicEntity entity)
+        public string PutCompanyInfo(CompanyInfoEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
                 if (entity == null)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                CompanyInfoManager manager = new CompanyInfoManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -114,15 +108,13 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string DeleteDic(int id)
+        public string DeleteCompanyInfo(int id)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
+                CompanyInfoManager manager = new CompanyInfoManager();
 
-                SysDicManager manager = new SysDicManager();
-
-                SysDicEntity entity = manager.GetDicByID(id);
+                CompanyInfoEntity entity = manager.GetCompanyInfoByID(id);
                 if (entity != null)
                 {
                     entity.Valid = "F";

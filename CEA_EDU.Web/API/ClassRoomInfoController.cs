@@ -20,34 +20,34 @@ using Newtonsoft.Json.Linq;
 
 namespace CEA_EDU.Web.API
 {
-    public class DictionaryController : ApiController
+    public class ClassRoomInfoController : ApiController
     {
-        public string GetDicByID(int id)
+        public string GetClassRoomInfoByID(int id)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByID(id));
+            ClassRoomInfoManager manager = new ClassRoomInfoManager();
+            return new JavaScriptSerializer().Serialize(manager.GetClassRoomInfoByID(id));
         }
 
-        public string GetDicByCode(string code)
+        public string GetClassRoomInfoByCode(string code)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByCode(code));
+            ClassRoomInfoManager manager = new ClassRoomInfoManager();
+            return new JavaScriptSerializer().Serialize(manager.GetClassRoomInfoByCode(code));
         }
 
-        public string GetDicByName(string name)
+        public string GetClassRoomInfoByName(string name)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByName(name));
+            ClassRoomInfoManager manager = new ClassRoomInfoManager();
+            return new JavaScriptSerializer().Serialize(manager.GetClassRoomInfoByName(name));
         }
 
-        public string GetAllDics(string order, string sort, string searchKey, int offset, int pageSize)
+        public string GetAll(string order, string sort, string searchKey, int offset, int pageSize)
         {
             int total = 0;
-            SysDicManager manager = new SysDicManager();
-            List<SysDicEntity> list = manager.GetSearch(searchKey, sort, order, offset, pageSize, out total);
+            ClassRoomInfoManager manager = new ClassRoomInfoManager();
+            List<ClassRoomInfoEntity> list = manager.GetSearch(searchKey, sort, order, offset, pageSize, out total);
 
             //给分页实体赋值  
-            PageModels<SysDicEntity> model = new PageModels<SysDicEntity>();
+            PageModels<ClassRoomInfoEntity> model = new PageModels<ClassRoomInfoEntity>();
             model.total = total;
             if (total % pageSize == 0)
                 model.page = total / pageSize;
@@ -60,20 +60,17 @@ namespace CEA_EDU.Web.API
             return new JavaScriptSerializer().Serialize(model);
         }
 
-        public string PostDic(SysDicEntity entity)
+        public string PostClassRoomInfo(ClassRoomInfoEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
                 if (entity == null)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                ClassRoomInfoManager manager = new ClassRoomInfoManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -87,20 +84,17 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string PutDic(SysDicEntity entity)
+        public string PutClassRoomInfo(ClassRoomInfoEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
                 if (entity == null)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                ClassRoomInfoManager manager = new ClassRoomInfoManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -114,15 +108,13 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string DeleteDic(int id)
+        public string DeleteClassRoomInfo(int id)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
+                ClassRoomInfoManager manager = new ClassRoomInfoManager();
 
-                SysDicManager manager = new SysDicManager();
-
-                SysDicEntity entity = manager.GetDicByID(id);
+                ClassRoomInfoEntity entity = manager.GetClassRoomInfoByID(id);
                 if (entity != null)
                 {
                     entity.Valid = "F";

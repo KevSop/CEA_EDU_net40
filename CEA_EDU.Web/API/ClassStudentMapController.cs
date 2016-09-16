@@ -20,34 +20,34 @@ using Newtonsoft.Json.Linq;
 
 namespace CEA_EDU.Web.API
 {
-    public class DictionaryController : ApiController
+    public class ClassStudentMapController : ApiController
     {
-        public string GetDicByID(int id)
+        public string GetClassStudentMapByID(int id)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByID(id));
+            ClassStudentMapManager manager = new ClassStudentMapManager();
+            return new JavaScriptSerializer().Serialize(manager.GetClassStudentMapByID(id));
         }
 
-        public string GetDicByCode(string code)
+        public string GetClassStudentMapByClassID(int classID)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByCode(code));
+            ClassStudentMapManager manager = new ClassStudentMapManager();
+            return new JavaScriptSerializer().Serialize(manager.GetClassStudentMapByClassID(classID));
         }
 
-        public string GetDicByName(string name)
+        public string GetClassStudentMapByStudentID(int studentID)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByName(name));
+            ClassStudentMapManager manager = new ClassStudentMapManager();
+            return new JavaScriptSerializer().Serialize(manager.GetClassStudentMapByStudentID(studentID));
         }
 
-        public string GetAllDics(string order, string sort, string searchKey, int offset, int pageSize)
+        public string GetAll(string order, string sort, string searchKey, int offset, int pageSize)
         {
             int total = 0;
-            SysDicManager manager = new SysDicManager();
-            List<SysDicEntity> list = manager.GetSearch(searchKey, sort, order, offset, pageSize, out total);
+            ClassStudentMapManager manager = new ClassStudentMapManager();
+            List<ClassStudentMapEntity> list = manager.GetSearch(sort, order, offset, pageSize, out total);
 
             //给分页实体赋值  
-            PageModels<SysDicEntity> model = new PageModels<SysDicEntity>();
+            PageModels<ClassStudentMapEntity> model = new PageModels<ClassStudentMapEntity>();
             model.total = total;
             if (total % pageSize == 0)
                 model.page = total / pageSize;
@@ -60,20 +60,17 @@ namespace CEA_EDU.Web.API
             return new JavaScriptSerializer().Serialize(model);
         }
 
-        public string PostDic(SysDicEntity entity)
+        public string PostClassStudentMap(ClassStudentMapEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
-                if (entity == null)
+                if (entity == null || entity.StudentID <= 0)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                ClassStudentMapManager manager = new ClassStudentMapManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -87,20 +84,17 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string PutDic(SysDicEntity entity)
+        public string PutClassStudentMap(ClassStudentMapEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
                 if (entity == null)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                ClassStudentMapManager manager = new ClassStudentMapManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -114,15 +108,13 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string DeleteDic(int id)
+        public string DeleteClassStudentMap(int id)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
+                ClassStudentMapManager manager = new ClassStudentMapManager();
 
-                SysDicManager manager = new SysDicManager();
-
-                SysDicEntity entity = manager.GetDicByID(id);
+                ClassStudentMapEntity entity = manager.GetClassStudentMapByID(id);
                 if (entity != null)
                 {
                     entity.Valid = "F";

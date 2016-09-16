@@ -198,10 +198,10 @@ namespace CEA_EDU.Domain.Entity
                 validatorResult = false;
                 this.ErrorList.Add("The length of Name should not be greater then 50!");
             }
-            if (this.Password != null && 100 < this.Password.Length)
+            if (this.Password != null && 50 < this.Password.Length)
             {
                 validatorResult = false;
-                this.ErrorList.Add("The length of Password should not be greater then 100!");
+                this.ErrorList.Add("The length of Password should not be greater then 50!");
             }
             if (this.Type != null && 20 < this.Type.Length)
             {
@@ -233,10 +233,10 @@ namespace CEA_EDU.Domain.Entity
                 validatorResult = false;
                 this.ErrorList.Add("The length of PositionName should not be greater then 50!");
             }
-            if (this.Sex != null && 10 < this.Sex.Length)
+            if (this.Sex != null && 2 < this.Sex.Length)
             {
                 validatorResult = false;
-                this.ErrorList.Add("The length of Sex should not be greater then 10!");
+                this.ErrorList.Add("The length of Sex should not be greater then 2!");
             }
             if (this.Email != null && 50 < this.Email.Length)
             {

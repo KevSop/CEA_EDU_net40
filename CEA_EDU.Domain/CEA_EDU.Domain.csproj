@@ -56,6 +56,15 @@
     <Compile Include="Entity\LoginLogEntity.cs" />
     <Compile Include="Entity\SchoolInfoEntity.cs" />
     <Compile Include="Entity\StudentClassHistoryEntity.cs" />
+    <Compile Include="Manager\CompanyInfoManager.cs" />
+    <Compile Include="Manager\ClassInfoManager.cs" />
+    <Compile Include="Manager\ClassRoomInfoManager.cs" />
+    <Compile Include="Manager\ClassStudentMapManager.cs" />
+    <Compile Include="Manager\ArrangeClassManager.cs" />
+    <Compile Include="Manager\LoginLogManager.cs" />
+    <Compile Include="Manager\StudentClassHistoryManager.cs" />
+    <Compile Include="Manager\CurriculumInfoManager.cs" />
+    <Compile Include="Manager\SchoolInfoManager.cs" />
     <Compile Include="T4\GenEntity.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

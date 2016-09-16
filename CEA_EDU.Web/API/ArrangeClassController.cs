@@ -20,34 +20,40 @@ using Newtonsoft.Json.Linq;
 
 namespace CEA_EDU.Web.API
 {
-    public class DictionaryController : ApiController
+    public class ArrangeClassController : ApiController
     {
-        public string GetDicByID(int id)
+        public string GetArrangeClassByID(int id)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByID(id));
+            ArrangeClassManager manager = new ArrangeClassManager();
+            return new JavaScriptSerializer().Serialize(manager.GetArrangeClassByID(id));
         }
 
-        public string GetDicByCode(string code)
+        public string GetArrangeClassByCurriculumID(int curriculumID)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByCode(code));
+            ArrangeClassManager manager = new ArrangeClassManager();
+            return new JavaScriptSerializer().Serialize(manager.GetArrangeClassByCurriculumID(curriculumID));
         }
 
-        public string GetDicByName(string name)
+        public string GetArrangeClassByClassID(int classID)
         {
-            SysDicManager manager = new SysDicManager();
-            return new JavaScriptSerializer().Serialize(manager.GetDicByName(name));
+            ArrangeClassManager manager = new ArrangeClassManager();
+            return new JavaScriptSerializer().Serialize(manager.GetArrangeClassByClassID(classID));
         }
 
-        public string GetAllDics(string order, string sort, string searchKey, int offset, int pageSize)
+        public string GetArrangeClassByClassRoomID(int classRoomID)
+        {
+            ArrangeClassManager manager = new ArrangeClassManager();
+            return new JavaScriptSerializer().Serialize(manager.GetArrangeClassByClassRoomID(classRoomID));
+        }
+
+        public string GetAll(string order, string sort, string searchKey, int offset, int pageSize)
         {
             int total = 0;
-            SysDicManager manager = new SysDicManager();
-            List<SysDicEntity> list = manager.GetSearch(searchKey, sort, order, offset, pageSize, out total);
+            ArrangeClassManager manager = new ArrangeClassManager();
+            List<ArrangeClassEntity> list = manager.GetSearch(sort, order, offset, pageSize, out total);
 
             //给分页实体赋值  
-            PageModels<SysDicEntity> model = new PageModels<SysDicEntity>();
+            PageModels<ArrangeClassEntity> model = new PageModels<ArrangeClassEntity>();
             model.total = total;
             if (total % pageSize == 0)
                 model.page = total / pageSize;
@@ -60,20 +66,17 @@ namespace CEA_EDU.Web.API
             return new JavaScriptSerializer().Serialize(model);
         }
 
-        public string PostDic(SysDicEntity entity)
+        public string PostArrangeClass(ArrangeClassEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
-                if (entity == null)
+                if (entity == null || entity.ClassID <= 0 || entity.ClassRoomID <= 0 || entity.CurriculumID <= 0 || entity.TeacherID <= 0)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                ArrangeClassManager manager = new ArrangeClassManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -87,20 +90,17 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string PutDic(SysDicEntity entity)
+        public string PutArrangeClass(ArrangeClassEntity entity)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
-
                 if (entity == null)
                 {
                     return "error";
                 }
 
-                SysDicManager manager = new SysDicManager();
+                ArrangeClassManager manager = new ArrangeClassManager();
 
-                entity.IsDisplay = "T";
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
 
@@ -114,15 +114,13 @@ namespace CEA_EDU.Web.API
             }
         }
 
-        public string DeleteDic(int id)
+        public string DeleteArrangeClass(int id)
         {
             try
             {
-                //DictionaryViewModel model = JsonConvert.DeserializeObject<DictionaryViewModel>(jsonString.ToString());
+                ArrangeClassManager manager = new ArrangeClassManager();
 
-                SysDicManager manager = new SysDicManager();
-
-                SysDicEntity entity = manager.GetDicByID(id);
+                ArrangeClassEntity entity = manager.GetArrangeClassByID(id);
                 if (entity != null)
                 {
                     entity.Valid = "F";
