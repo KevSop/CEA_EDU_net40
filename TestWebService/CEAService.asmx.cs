@@ -26,7 +26,7 @@ namespace TestWebService
 
             list.Add(new CEAUserInfoEntity() {
                 Code = "7001",
-                Name = "教师7001_接口",
+                Name = "",   //教师7001_接口
                 Type = "普通用户",
                 Group = "Teacher",
                 Company = "Company",
@@ -39,7 +39,7 @@ namespace TestWebService
             {
                 Code = "7002",
                 Name = "教师7002_接口",
-                Type = "普通用户",
+                Type = "",   //普通用户
                 Group = "Teacher",
                 Company = "Company",
                 PositionID = "1",

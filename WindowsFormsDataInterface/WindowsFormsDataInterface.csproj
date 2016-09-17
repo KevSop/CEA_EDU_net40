@@ -11,7 +11,8 @@
     <RootNamespace>WindowsFormsDataInterface</RootNamespace>
     <AssemblyName>WindowsFormsDataInterface</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -74,6 +75,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
     <None Include="CEAWebService.wsdl" />
@@ -126,6 +128,20 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CEA_EDU.Common\CEA_EDU.Common.csproj">
+      <Project>{EF8F4E27-0B9C-4F2B-9609-0504DB8C710C}</Project>
+      <Name>CEA_EDU.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CEA_EDU.Domain\CEA_EDU.Domain.csproj">
+      <Project>{29C9C8CC-45C5-47C4-9F82-1A4A277C1CA3}</Project>
+      <Name>CEA_EDU.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CEA_EDU.Web\CEA_EDU.Web.csproj">
+      <Project>{8C7B0A76-0A31-43C9-B72C-18B02F061CB4}</Project>
+      <Name>CEA_EDU.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

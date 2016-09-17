@@ -22,7 +22,7 @@ using System.Xml.Serialization;
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Web.Services.WebServiceBindingAttribute(Name="Service1Soap", Namespace="http://tempuri.org/")]
-public partial class Service1 : System.Web.Services.Protocols.SoapHttpClientProtocol
+public partial class CEAWebService : System.Web.Services.Protocols.SoapHttpClientProtocol
 {
     
     private System.Threading.SendOrPostCallback HelloWorldOperationCompleted;
@@ -40,9 +40,9 @@ public partial class Service1 : System.Web.Services.Protocols.SoapHttpClientProt
     private System.Threading.SendOrPostCallback GetArrangeClassListOperationCompleted;
     
     /// <remarks/>
-    public Service1()
+    public CEAWebService()
     {
-        this.Url = "http://localhost/TestWebService/CEAService.asmx";
+        this.Url = System.Configuration.ConfigurationSettings.AppSettings["CEAWebServiceUrl"].ToString();
     }
     
     /// <remarks/>
