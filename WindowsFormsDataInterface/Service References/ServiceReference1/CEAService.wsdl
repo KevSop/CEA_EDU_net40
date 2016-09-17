@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserList">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetUserListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserListResult" type="tns:ArrayOfCEAUserInfoEntity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCEAUserInfoEntity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CEAUserInfoEntity" nillable="true" type="tns:CEAUserInfoEntity" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CEAUserInfoEntity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorList" type="tns:ArrayOfString" />
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Group" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Department" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PositionID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PositionName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Sex" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Birthday" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Valid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreateBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UpdateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="UpdateBy" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetCurriculumList">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetCurriculumListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCurriculumListResult" type="tns:ArrayOfCEACurriculumInfoEntity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCEACurriculumInfoEntity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CEACurriculumInfoEntity" nillable="true" type="tns:CEACurriculumInfoEntity" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CEACurriculumInfoEntity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorList" type="tns:ArrayOfString" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurriculumID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Score" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="StartTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remark" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Valid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreateBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UpdateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="UpdateBy" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetClassList">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetClassListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetClassListResult" type="tns:ArrayOfCEAClassInfoEntity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCEAClassInfoEntity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CEAClassInfoEntity" nillable="true" type="tns:CEAClassInfoEntity" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CEAClassInfoEntity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorList" type="tns:ArrayOfString" />
+          <s:element minOccurs="1" maxOccurs="1" name="ClassID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="StartTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="TeacherCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Department" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remark" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Valid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreateBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UpdateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="UpdateBy" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetClassRoomList">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetClassRoomListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetClassRoomListResult" type="tns:ArrayOfCEAClassRoomInfoEntity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCEAClassRoomInfoEntity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CEAClassRoomInfoEntity" nillable="true" type="tns:CEAClassRoomInfoEntity" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CEAClassRoomInfoEntity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorList" type="tns:ArrayOfString" />
+          <s:element minOccurs="1" maxOccurs="1" name="ClassRoomID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SeatNum" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remark" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Valid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreateBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UpdateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="UpdateBy" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetClassStudentMapList">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetClassStudentMapListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetClassStudentMapListResult" type="tns:ArrayOfCEAClassStudentMapEntity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCEAClassStudentMapEntity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CEAClassStudentMapEntity" nillable="true" type="tns:CEAClassStudentMapEntity" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CEAClassStudentMapEntity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorList" type="tns:ArrayOfString" />
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ClassCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StudentCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Valid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreateBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UpdateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="UpdateBy" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetArrangeClassList">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetArrangeClassListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetArrangeClassListResult" type="tns:ArrayOfCEAArrangeClassEntity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCEAArrangeClassEntity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CEAArrangeClassEntity" nillable="true" type="tns:CEAArrangeClassEntity" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CEAArrangeClassEntity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorList" type="tns:ArrayOfString" />
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CurriculumCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ClassCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ClassRoomCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TeacherCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="StartTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remark" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="BespeakCount" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="AttendCount" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="PassedCount" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Valid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreateBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UpdateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="UpdateBy" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserList" />
+  </wsdl:message>
+  <wsdl:message name="GetUserListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCurriculumListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCurriculumList" />
+  </wsdl:message>
+  <wsdl:message name="GetCurriculumListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCurriculumListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetClassListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetClassList" />
+  </wsdl:message>
+  <wsdl:message name="GetClassListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetClassListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetClassRoomListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetClassRoomList" />
+  </wsdl:message>
+  <wsdl:message name="GetClassRoomListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetClassRoomListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetClassStudentMapListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetClassStudentMapList" />
+  </wsdl:message>
+  <wsdl:message name="GetClassStudentMapListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetClassStudentMapListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetArrangeClassListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetArrangeClassList" />
+  </wsdl:message>
+  <wsdl:message name="GetArrangeClassListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetArrangeClassListResponse" />
+  </wsdl:message>
+  <wsdl:portType name="CEAServiceSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserList">
+      <wsdl:input message="tns:GetUserListSoapIn" />
+      <wsdl:output message="tns:GetUserListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurriculumList">
+      <wsdl:input message="tns:GetCurriculumListSoapIn" />
+      <wsdl:output message="tns:GetCurriculumListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClassList">
+      <wsdl:input message="tns:GetClassListSoapIn" />
+      <wsdl:output message="tns:GetClassListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClassRoomList">
+      <wsdl:input message="tns:GetClassRoomListSoapIn" />
+      <wsdl:output message="tns:GetClassRoomListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClassStudentMapList">
+      <wsdl:input message="tns:GetClassStudentMapListSoapIn" />
+      <wsdl:output message="tns:GetClassStudentMapListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetArrangeClassList">
+      <wsdl:input message="tns:GetArrangeClassListSoapIn" />
+      <wsdl:output message="tns:GetArrangeClassListSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CEAServiceSoap" type="tns:CEAServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserList">
+      <soap:operation soapAction="http://tempuri.org/GetUserList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurriculumList">
+      <soap:operation soapAction="http://tempuri.org/GetCurriculumList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClassList">
+      <soap:operation soapAction="http://tempuri.org/GetClassList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClassRoomList">
+      <soap:operation soapAction="http://tempuri.org/GetClassRoomList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClassStudentMapList">
+      <soap:operation soapAction="http://tempuri.org/GetClassStudentMapList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetArrangeClassList">
+      <soap:operation soapAction="http://tempuri.org/GetArrangeClassList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CEAServiceSoap12" type="tns:CEAServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserList">
+      <soap12:operation soapAction="http://tempuri.org/GetUserList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurriculumList">
+      <soap12:operation soapAction="http://tempuri.org/GetCurriculumList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClassList">
+      <soap12:operation soapAction="http://tempuri.org/GetClassList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClassRoomList">
+      <soap12:operation soapAction="http://tempuri.org/GetClassRoomList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClassStudentMapList">
+      <soap12:operation soapAction="http://tempuri.org/GetClassStudentMapList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetArrangeClassList">
+      <soap12:operation soapAction="http://tempuri.org/GetArrangeClassList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CEAService">
+    <wsdl:port name="CEAServiceSoap" binding="tns:CEAServiceSoap">
+      <soap:address location="http://localhost/TestWebService/CEAService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CEAServiceSoap12" binding="tns:CEAServiceSoap12">
+      <soap12:address location="http://localhost/TestWebService/CEAService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
