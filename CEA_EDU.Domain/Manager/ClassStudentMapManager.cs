@@ -71,6 +71,12 @@ namespace CEA_EDU.Domain.Manager
             return Repository.Query<ClassStudentMapEntity>(sql, new { id = id }).FirstOrDefault();
         }
 
+        public ClassStudentMapEntity GetClassStudentMapByKeys(int classID, int studentID)
+        {
+            string sql = @"select * from ClassStudentMap where classID=@classID and studentID = @studentID";
+            return Repository.Query<ClassStudentMapEntity>(sql, new { classID = classID, studentID = studentID }).FirstOrDefault();
+        }
+
         public List<ClassStudentMapEntity> GetClassStudentMapByClassID(int classID)
         {
             string sql = @"select * from ClassStudentMap where valid = 'T' and classID=@classID ";

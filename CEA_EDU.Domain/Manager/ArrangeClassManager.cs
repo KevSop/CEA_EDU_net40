@@ -71,6 +71,12 @@ namespace CEA_EDU.Domain.Manager
             return Repository.Query<ArrangeClassEntity>(sql, new { id = id }).FirstOrDefault();
         }
 
+        public ArrangeClassEntity GetArrangeClassByKeys(int curriculumID, int classID, int classRoomID, int teacherID)
+        {
+            string sql = @"select * from ArrangeClass where curriculumID=@curriculumID and classID=@classID and classRoomID=@classRoomID and teacherID=@teacherID";
+            return Repository.Query<ArrangeClassEntity>(sql, new { curriculumID=curriculumID, classID=classID, classRoomID=classRoomID, teacherID=@teacherID}).FirstOrDefault();
+        }
+
         public List<ArrangeClassEntity> GetArrangeClassByCurriculumID(int curriculumID)
         {
             string sql = @"select * from ArrangeClass where valid = 'T' and curriculumID=@curriculumID ";
