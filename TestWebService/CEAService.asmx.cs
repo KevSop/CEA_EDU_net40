@@ -32,6 +32,7 @@ namespace TestWebService
                 Company = "Company",
                 PositionID = "1",
                 PositionName = "教师",
+                IdentityCard = "1101",
                 Valid = "T"
             });
 
@@ -44,6 +45,7 @@ namespace TestWebService
                 Company = "Company",
                 PositionID = "1",
                 PositionName = "教师",
+                IdentityCard = "1102",
                 Valid = "T"
             });
 
@@ -57,6 +59,7 @@ namespace TestWebService
                 Company = "Company",
                 PositionID = "1",
                 PositionName = "学生",
+                IdentityCard = "1103",
                 Valid = "T"
             });
 
@@ -69,6 +72,7 @@ namespace TestWebService
                 Company = "Company",
                 PositionID = "1",
                 PositionName = "学生",
+                IdentityCard = "1104",
                 Valid = "T"
             });
 

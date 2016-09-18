@@ -10,7 +10,7 @@ namespace CEA_EDU.Domain.Entity
         #region Constructor
         public UserInfoEntity() { }
 
-        public UserInfoEntity(Int32 id,String code,String name,String password,String type,String group,String company,String department,String positionID,String positionName,String sex,DateTime? birthday,String email,String phone,String address,String valid,DateTime createTime,String createBy,DateTime updateTime,String updateBy)
+        public UserInfoEntity(Int32 id, String code, String name, String password, String type, String group, String company, String department, String positionID, String positionName, String sex, DateTime? birthday, String email, String phone, String address, String identityCard, String valid, DateTime createTime, String createBy, DateTime updateTime, String updateBy)
         {
             this.id = id;
             this.code = code;
@@ -27,6 +27,7 @@ namespace CEA_EDU.Domain.Entity
             this.email = email;
             this.phone = phone;
             this.address = address;
+            this.identityCard = identityCard;
             this.valid = valid;
             this.createTime = createTime;
             this.createBy = createBy;
@@ -141,6 +142,13 @@ namespace CEA_EDU.Domain.Entity
             get { return this.address; }
             set { this.address = value; }
         }
+        private String identityCard;
+
+        public String IdentityCard
+        {
+            get { return this.identityCard; }
+            set { this.identityCard = value; }
+        }
         private String valid;
 
         public String Valid
@@ -181,7 +189,7 @@ namespace CEA_EDU.Domain.Entity
         #region Validator
         public List<string> ErrorList = new List<string>();
         private bool Validator()
-        {    
+        {
             bool validatorResult = true;
             if (string.IsNullOrEmpty(this.Code))
             {
@@ -198,10 +206,10 @@ namespace CEA_EDU.Domain.Entity
                 validatorResult = false;
                 this.ErrorList.Add("The length of Name should not be greater then 50!");
             }
-            if (this.Password != null && 100 < this.Password.Length)
+            if (this.Password != null && 50 < this.Password.Length)
             {
                 validatorResult = false;
-                this.ErrorList.Add("The length of Password should not be greater then 100!");
+                this.ErrorList.Add("The length of Password should not be greater then 50!");
             }
             if (this.Type != null && 20 < this.Type.Length)
             {
@@ -233,10 +241,10 @@ namespace CEA_EDU.Domain.Entity
                 validatorResult = false;
                 this.ErrorList.Add("The length of PositionName should not be greater then 50!");
             }
-            if (this.Sex != null && 10 < this.Sex.Length)
+            if (this.Sex != null && 2 < this.Sex.Length)
             {
                 validatorResult = false;
-                this.ErrorList.Add("The length of Sex should not be greater then 10!");
+                this.ErrorList.Add("The length of Sex should not be greater then 2!");
             }
             if (this.Email != null && 50 < this.Email.Length)
             {
@@ -253,6 +261,11 @@ namespace CEA_EDU.Domain.Entity
                 validatorResult = false;
                 this.ErrorList.Add("The length of Address should not be greater then 100!");
             }
+            if (this.IdentityCard != null && 20 < this.IdentityCard.Length)
+            {
+                validatorResult = false;
+                this.ErrorList.Add("The length of IdentityCard should not be greater then 20!");
+            }
             if (string.IsNullOrEmpty(this.Valid))
             {
                 validatorResult = false;
@@ -263,7 +276,7 @@ namespace CEA_EDU.Domain.Entity
                 validatorResult = false;
                 this.ErrorList.Add("The length of Valid should not be greater then 1!");
             }
-            if (this.CreateTime==null)
+            if (this.CreateTime == null)
             {
                 validatorResult = false;
                 this.ErrorList.Add("The CreateTime should not be empty!");
@@ -273,7 +286,7 @@ namespace CEA_EDU.Domain.Entity
                 validatorResult = false;
                 this.ErrorList.Add("The length of CreateBy should not be greater then 20!");
             }
-            if (this.UpdateTime==null)
+            if (this.UpdateTime == null)
             {
                 validatorResult = false;
                 this.ErrorList.Add("The UpdateTime should not be empty!");
@@ -284,7 +297,7 @@ namespace CEA_EDU.Domain.Entity
                 this.ErrorList.Add("The length of UpdateBy should not be greater then 20!");
             }
             return validatorResult;
-        }    
+        }
         #endregion
     }
 }

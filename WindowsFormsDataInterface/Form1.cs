@@ -153,6 +153,7 @@ namespace WindowsFormsDataInterface
                                 entity.Email = ceaUser.Email;
                                 entity.Phone = ceaUser.Phone;
                                 entity.Address = ceaUser.Address;
+                                entity.IdentityCard = ceaUser.IdentityCard;
                                 entity.Valid = ceaUser.Valid;
 
                                 manager.Update(entity);
@@ -174,6 +175,7 @@ namespace WindowsFormsDataInterface
                                 entity.Email = ceaUser.Email;
                                 entity.Phone = ceaUser.Phone;
                                 entity.Address = ceaUser.Address;
+                                entity.IdentityCard = ceaUser.IdentityCard;
                                 entity.Valid = ceaUser.Valid;
 
                                 manager.Insert(entity);

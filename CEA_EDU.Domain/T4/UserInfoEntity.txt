@@ -10,7 +10,7 @@ namespace CEA_EDU.Domain.Entity
         #region Constructor
         public UserInfoEntity() { }
 
-        public UserInfoEntity(Int32 id,String code,String name,String password,String type,String group,String company,String department,String positionID,String positionName,String sex,DateTime? birthday,String email,String phone,String address,String valid,DateTime createTime,String createBy,DateTime updateTime,String updateBy)
+        public UserInfoEntity(Int32 id,String code,String name,String password,String type,String group,String company,String department,String positionID,String positionName,String sex,DateTime? birthday,String email,String phone,String address,String identityCard,String valid,DateTime createTime,String createBy,DateTime updateTime,String updateBy)
         {
             this.id = id;
             this.code = code;
@@ -27,6 +27,7 @@ namespace CEA_EDU.Domain.Entity
             this.email = email;
             this.phone = phone;
             this.address = address;
+            this.identityCard = identityCard;
             this.valid = valid;
             this.createTime = createTime;
             this.createBy = createBy;
@@ -141,6 +142,13 @@ namespace CEA_EDU.Domain.Entity
             get { return this.address; }
             set { this.address = value; }
         }
+        private String identityCard;
+
+        public String IdentityCard
+        {
+            get { return this.identityCard; }
+            set { this.identityCard = value; }
+        }
         private String valid;
 
         public String Valid
@@ -252,6 +260,11 @@ namespace CEA_EDU.Domain.Entity
             {
                 validatorResult = false;
                 this.ErrorList.Add("The length of Address should not be greater then 100!");
+            }
+            if (this.IdentityCard != null && 20 < this.IdentityCard.Length)
+            {
+                validatorResult = false;
+                this.ErrorList.Add("The length of IdentityCard should not be greater then 20!");
             }
             if (string.IsNullOrEmpty(this.Valid))
             {

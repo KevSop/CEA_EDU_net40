@@ -1914,6 +1914,7 @@
     <Content Include="FlatLab\img\flags\ru.png" />
     <Content Include="FlatLab\img\flags\us.png" />
     <Content Include="FlatLab\img\follower-avatar.jpg" />
+    <Content Include="FlatLab\img\logo.png" />
     <Content Include="FlatLab\img\gallery\1.jpg" />
     <Content Include="FlatLab\img\gallery\2.jpg" />
     <Content Include="FlatLab\img\gallery\3.jpg" />

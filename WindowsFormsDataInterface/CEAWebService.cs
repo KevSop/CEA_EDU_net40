@@ -344,6 +344,8 @@ public partial class CEAUserInfoEntity
     private string phoneField;
     
     private string addressField;
+
+    private string identityCardField;
     
     private string validField;
     
@@ -563,6 +565,20 @@ public partial class CEAUserInfoEntity
             this.addressField = value;
         }
     }
+
+    /// <remarks/>
+    public string IdentityCard
+    {
+        get
+        {
+            return this.identityCardField;
+        }
+        set
+        {
+            this.identityCardField = value;
+        }
+    }
+    
     
     /// <remarks/>
     public string Valid
