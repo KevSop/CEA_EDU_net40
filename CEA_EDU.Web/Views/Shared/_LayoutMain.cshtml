@@ -123,7 +123,7 @@
 
                 @{
                     CEA_EDU.Web.Controllers.ManageController mc = new CEA_EDU.Web.Controllers.ManageController();
-                    @Html.Raw(mc.GetMenuHtml(Request.Url.ToString().Replace(Request.Url.PathAndQuery, "") + Request.ApplicationPath))
+                    @Html.Raw(mc.GetMenuHtml((Request.ApplicationPath == "/" ? "" : Request.Url.ToString().Replace(Request.Url.PathAndQuery, "") + Request.ApplicationPath)))
                     if (CEA_EDU.Web.Utils.SessionHelper.CurrentUser.Type == "超级管理员")
                     {
                         <li class="sub-menu">

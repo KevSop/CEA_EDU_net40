@@ -21,9 +21,13 @@ namespace CEA_EDU.Web.Controllers
             }
             ViewBag.CurrentPageRights = "unknow";
             if (!"Home".Equals(filterContext.RequestContext.RouteData.Values["controller"].ToString()))
-            {   //判定访问权限
-
-                string url = Request.Url.LocalPath.Replace(Request.ApplicationPath, "").TrimStart('/');
+            {   
+		//判定访问权限
+                string url = Request.Url.LocalPath.TrimStart('/');
+                if (Request.ApplicationPath != "/")
+                {
+                     url = Request.Url.LocalPath.Replace(Request.ApplicationPath, "").TrimStart('/');
+                }
                 string result = HasVisitRights(url);
                 if (result == "deny")
                     filterContext.Result = RedirectToRoute(new { Controller = "Home", Action = "Index" });
