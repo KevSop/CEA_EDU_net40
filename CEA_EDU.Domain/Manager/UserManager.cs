@@ -67,26 +67,32 @@ namespace CEA_EDU.Domain.Manager
 
         public UserInfoEntity GetUserByID(int id)
         {
-            string sql = @"select * from UserInfo where valid = 'T' and  id = @id";
+            string sql = @"select * from UserInfo(nolock) where valid = 'T' and  id = @id";
             return Repository.Query<UserInfoEntity>(sql, new { id = id }).FirstOrDefault();
         }
 
         public UserInfoEntity GetUserByCode(string code)
         {
-            string sql = @"select * from UserInfo where valid = 'T' and  code = @code";
+            string sql = @"select * from UserInfo(nolock) where valid = 'T' and  code = @code";
             return Repository.Query<UserInfoEntity>(sql, new { code = code }).FirstOrDefault();
         }
 
         public List<UserInfoEntity> GetUserByName(string name)
         {
-            string sql = @"select * from UserInfo where valid = 'T' and  name = @name";
+            string sql = @"select * from UserInfo(nolock) where valid = 'T' and  name = @name";
             return Repository.Query<UserInfoEntity>(sql, new { name = name }).ToList();
+        }
+
+        public List<UserInfoEntity> GetUserByType(string type)
+        {
+            string sql = @"select * from UserInfo(nolock) where valid = 'T' and  type = @type";
+            return Repository.Query<UserInfoEntity>(sql, new { type = type }).ToList();
         }
 
         public List<UserInfoEntity> GetSearch(string keyString, string sort, string order, int offset, int pageSize, out int total)
         {
             int pageCount = 0;
-            string querySql = string.Format("select * from UserInfo where valid = 'T' and (code like '%{0}%' or name like '%{0}%') ", keyString);
+            string querySql = string.Format("select * from UserInfo(nolock) where valid = 'T' and (code like '%{0}%' or name like '%{0}%') ", keyString);
             DataTable dt = SplitPage.SqlSplitPage(querySql, string.Format("order by {0} {1}", sort, order), null, offset / pageSize, pageSize, out pageCount, out total);
             List<UserInfoEntity> list = new List<UserInfoEntity>();
             foreach (DataRow dr in dt.Rows)

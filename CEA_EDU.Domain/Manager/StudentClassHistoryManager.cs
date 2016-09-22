@@ -67,20 +67,20 @@ namespace CEA_EDU.Domain.Manager
 
         public StudentClassHistoryEntity GetStudentClassHistoryByID(int id)
         {
-            string sql = @"select * from StudentClassHistory where valid = 'T' and id=@id ";
+            string sql = @"select * from StudentClassHistory(nolock) where valid = 'T' and id=@id ";
             return Repository.Query<StudentClassHistoryEntity>(sql, new { id = id }).FirstOrDefault();
         }
 
         public List<StudentClassHistoryEntity> GetStudentClassHistoryByStudentID(int studentID)
         {
-            string sql = @"select * from StudentClassHistory where valid = 'T' and studentID=@studentID ";
+            string sql = @"select * from StudentClassHistory(nolock) where valid = 'T' and studentID=@studentID ";
             return Repository.Query<StudentClassHistoryEntity>(sql, new { studentID = studentID }).ToList();
         }
 
         public List<StudentClassHistoryEntity> GetSearch(string sort, string order, int offset, int pageSize, out int total)
         {
             int pageCount = 0;
-            string querySql = string.Format("select * from StudentClassHistory where valid = 'T'");
+            string querySql = string.Format("select * from StudentClassHistory(nolock) where valid = 'T'");
             DataTable dt = SplitPage.SqlSplitPage(querySql, string.Format("order by {0} {1}", sort, order), null, offset / pageSize, pageSize, out pageCount, out total);
 
             List<StudentClassHistoryEntity> list = new List<StudentClassHistoryEntity>();

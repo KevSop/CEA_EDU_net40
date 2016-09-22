@@ -22,6 +22,12 @@ namespace CEA_EDU.Web.API
 {
     public class ArrangeClassController : ApiController
     {
+        public string GetArrangeClassView(int? curriculumID, int? classID, int? classRoomID, int? teacherID, DateTime? startTime, DateTime? endTime)
+        {
+            ArrangeClassManager manager = new ArrangeClassManager();
+            return new JavaScriptSerializer().Serialize(manager.GetArrangeClassView(curriculumID, classID, classRoomID, teacherID, startTime, endTime));
+        }
+
         public string GetArrangeClassByID(int id)
         {
             ArrangeClassManager manager = new ArrangeClassManager();

@@ -66,44 +66,44 @@ namespace CEA_EDU.Domain.Manager
 
         public LoginLogEntity GetLoginLogByID(int id)
         {
-            string sql = @"select * from LoginLog where id=@id ";
+            string sql = @"select * from LoginLog(nolock) where id=@id ";
             return Repository.Query<LoginLogEntity>(sql, new { id = id }).FirstOrDefault();
         }
 
         public LoginLogEntity GetLoginLogByGuid(string guid)
         {
-            string sql = @"select * from LoginLog where guid=@guid ";
+            string sql = @"select * from LoginLog(nolock) where guid=@guid ";
             return Repository.Query<LoginLogEntity>(sql, new { guid = guid }).FirstOrDefault();
         }
 
         public List<LoginLogEntity> GetLoginLogByLoginID(int loginID)
         {
-            string sql = @"select * from LoginLog where loginID=@loginID ";
+            string sql = @"select * from LoginLog(nolock) where loginID=@loginID ";
             return Repository.Query<LoginLogEntity>(sql, new { loginID = loginID }).ToList();
         }
 
         public List<LoginLogEntity> GetLoginLogByLoginName(string loginName)
         {
-            string sql = @"select * from LoginLog where loginName=@loginName ";
+            string sql = @"select * from LoginLog(nolock) where loginName=@loginName ";
             return Repository.Query<LoginLogEntity>(sql, new { loginName = loginName }).ToList();
         }
 
         public List<LoginLogEntity> GetLoginLogByType(string type)
         {
-            string sql = @"select * from LoginLog where type=@type ";
+            string sql = @"select * from LoginLog(nolock) where type=@type ";
             return Repository.Query<LoginLogEntity>(sql, new { type = type }).ToList();
         }
 
         public List<LoginLogEntity> GetLoginLogByLoginType(string loginType)
         {
-            string sql = @"select * from LoginLog where type=@type ";
+            string sql = @"select * from LoginLog(nolock) where type=@type ";
             return Repository.Query<LoginLogEntity>(sql, new { loginType = loginType }).ToList();
         }
 
         public List<LoginLogEntity> GetSearch(string whereCondition, string sort, string order, int offset, int pageSize, out int total)
         {
             int pageCount = 0;
-            string querySql = string.Format("select * from LoginLog {0}", whereCondition);
+            string querySql = string.Format("select * from LoginLog(nolock) {0}", whereCondition);
             DataTable dt = SplitPage.SqlSplitPage(querySql, string.Format("order by {0} {1}", sort, order), null, offset / pageSize, pageSize, out pageCount, out total);
 
             List<LoginLogEntity> list = new List<LoginLogEntity>();

@@ -40,6 +40,12 @@ namespace CEA_EDU.Web.API
             return new JavaScriptSerializer().Serialize(manager.GetClassStudentMapByStudentID(studentID));
         }
 
+        public string GetStudentListByClassID(int classID)
+        {
+            ClassStudentMapManager manager = new ClassStudentMapManager();
+            return new JavaScriptSerializer().Serialize(manager.GetStudentListByClassID(classID));
+        }
+
         public string GetAll(string order, string sort, string searchKey, int offset, int pageSize)
         {
             int total = 0;

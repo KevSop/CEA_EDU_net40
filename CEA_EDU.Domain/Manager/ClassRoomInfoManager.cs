@@ -67,26 +67,26 @@ namespace CEA_EDU.Domain.Manager
 
         public ClassRoomInfoEntity GetClassRoomInfoByID(int classRoomID)
         {
-            string sql = @"select * from ClassRoomInfo where valid = 'T' and classRoomID=@classRoomID ";
+            string sql = @"select * from ClassRoomInfo(nolock) where valid = 'T' and classRoomID=@classRoomID ";
             return Repository.Query<ClassRoomInfoEntity>(sql, new { classRoomID = classRoomID }).FirstOrDefault();
         }
 
         public ClassRoomInfoEntity GetClassRoomInfoByCode(string code)
         {
-            string sql = @"select * from ClassRoomInfo where valid = 'T' and code=@code ";
+            string sql = @"select * from ClassRoomInfo(nolock) where valid = 'T' and code=@code ";
             return Repository.Query<ClassRoomInfoEntity>(sql, new { code = code }).FirstOrDefault();
         }
 
         public List<ClassRoomInfoEntity> GetClassRoomInfoByName(string name)
         {
-            string sql = @"select * from ClassRoomInfo where valid = 'T' and name like '%'+ @name + '%' ";
+            string sql = @"select * from ClassRoomInfo(nolock) where valid = 'T' and name like '%'+ @name + '%' ";
             return Repository.Query<ClassRoomInfoEntity>(sql, new { name = name }).ToList();
         }
 
         public List<ClassRoomInfoEntity> GetSearch(string keyString, string sort, string order, int offset, int pageSize, out int total)
         {
             int pageCount = 0;
-            string querySql = string.Format("select * from ClassRoomInfo where valid = 'T'  and (code like '%{0}%' or name like '%{0}%')", keyString);
+            string querySql = string.Format("select * from ClassRoomInfo(nolock) where valid = 'T'  and (code like '%{0}%' or name like '%{0}%')", keyString);
             DataTable dt = SplitPage.SqlSplitPage(querySql, string.Format("order by {0} {1}", sort, order), null, offset / pageSize, pageSize, out pageCount, out total);
 
             List<ClassRoomInfoEntity> list = new List<ClassRoomInfoEntity>();

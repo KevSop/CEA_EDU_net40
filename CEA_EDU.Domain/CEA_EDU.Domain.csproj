@@ -56,6 +56,7 @@
     <Compile Include="Entity\LoginLogEntity.cs" />
     <Compile Include="Entity\SchoolInfoEntity.cs" />
     <Compile Include="Entity\StudentClassHistoryEntity.cs" />
+    <Compile Include="Entity\ViewEntity\ArrangeClassEntity.cs" />
     <Compile Include="Manager\CompanyInfoManager.cs" />
     <Compile Include="Manager\ClassInfoManager.cs" />
     <Compile Include="Manager\ClassRoomInfoManager.cs" />

@@ -67,26 +67,26 @@ namespace CEA_EDU.Domain.Manager
 
         public CurriculumInfoEntity GetCurriculumInfoByID(int curriculumID)
         {
-            string sql = @"select * from CurriculumInfo where valid = 'T' and curriculumID=@curriculumID ";
+            string sql = @"select * from CurriculumInfo(nolock) where valid = 'T' and curriculumID=@curriculumID ";
             return Repository.Query<CurriculumInfoEntity>(sql, new { curriculumID = curriculumID }).FirstOrDefault();
         }
 
         public CurriculumInfoEntity GetCurriculumInfoByCode(string code)
         {
-            string sql = @"select * from CurriculumInfo where valid = 'T' and code=@code ";
+            string sql = @"select * from CurriculumInfo(nolock) where valid = 'T' and code=@code ";
             return Repository.Query<CurriculumInfoEntity>(sql, new { code = code }).FirstOrDefault();
         }
 
         public List<CurriculumInfoEntity> GetCurriculumInfoByName(string name)
         {
-            string sql = @"select * from CurriculumInfo where valid = 'T' and name like '%'+ @name + '%' ";
+            string sql = @"select * from CurriculumInfo(nolock) where valid = 'T' and name like '%'+ @name + '%' ";
             return Repository.Query<CurriculumInfoEntity>(sql, new { name = name }).ToList();
         }
 
         public List<CurriculumInfoEntity> GetSearch(string keyString, string sort, string order, int offset, int pageSize, out int total)
         {
             int pageCount = 0;
-            string querySql = string.Format("select * from CurriculumInfo where valid = 'T'  and (code like '%{0}%' or name like '%{0}%')", keyString);
+            string querySql = string.Format("select * from CurriculumInfo(nolock) where valid = 'T'  and (code like '%{0}%' or name like '%{0}%')", keyString);
             DataTable dt = SplitPage.SqlSplitPage(querySql, string.Format("order by {0} {1}", sort, order), null, offset / pageSize, pageSize, out pageCount, out total);
 
             List<CurriculumInfoEntity> list = new List<CurriculumInfoEntity>();

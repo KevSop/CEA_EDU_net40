@@ -67,32 +67,40 @@ namespace CEA_EDU.Domain.Manager
 
         public ClassStudentMapEntity GetClassStudentMapByID(int id)
         {
-            string sql = @"select * from ClassStudentMap where valid = 'T' and id=@id ";
+            string sql = @"select * from ClassStudentMap(nolock) where valid = 'T' and id=@id ";
             return Repository.Query<ClassStudentMapEntity>(sql, new { id = id }).FirstOrDefault();
         }
 
         public ClassStudentMapEntity GetClassStudentMapByKeys(int classID, int studentID)
         {
-            string sql = @"select * from ClassStudentMap where classID=@classID and studentID = @studentID";
+            string sql = @"select * from ClassStudentMap(nolock) where classID=@classID and studentID = @studentID";
             return Repository.Query<ClassStudentMapEntity>(sql, new { classID = classID, studentID = studentID }).FirstOrDefault();
         }
 
         public List<ClassStudentMapEntity> GetClassStudentMapByClassID(int classID)
         {
-            string sql = @"select * from ClassStudentMap where valid = 'T' and classID=@classID ";
+            string sql = @"select * from ClassStudentMap(nolock) where valid = 'T' and classID=@classID ";
             return Repository.Query<ClassStudentMapEntity>(sql, new { classID = classID }).ToList();
         }
 
         public List<ClassStudentMapEntity> GetClassStudentMapByStudentID(int studentID)
         {
-            string sql = @"select * from ClassStudentMap where valid = 'T' and studentID=@studentID ";
+            string sql = @"select * from ClassStudentMap(nolock) where valid = 'T' and studentID=@studentID ";
             return Repository.Query<ClassStudentMapEntity>(sql, new { studentID = studentID }).ToList();
+        }
+
+        public List<UserInfoEntity> GetStudentListByClassID(int classID)
+        {
+            string sql = @"select u.* from UserInfo u
+                               inner join ClassStudentMap(nolock) cs on cs.StudentID = u.ID and  cs.valid = 'T'
+                           where u.valid = 'T' and cs.classID =@classID ";
+            return Repository.Query<UserInfoEntity>(sql, new { classID = classID }).ToList();
         }
 
         public List<ClassStudentMapEntity> GetSearch(string sort, string order, int offset, int pageSize, out int total)
         {
             int pageCount = 0;
-            string querySql = string.Format("select * from ClassStudentMap where valid = 'T'");
+            string querySql = string.Format("select * from ClassStudentMap(nolock) where valid = 'T'");
             DataTable dt = SplitPage.SqlSplitPage(querySql, string.Format("order by {0} {1}", sort, order), null, offset / pageSize, pageSize, out pageCount, out total);
 
             List<ClassStudentMapEntity> list = new List<ClassStudentMapEntity>();

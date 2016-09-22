@@ -67,26 +67,26 @@ namespace CEA_EDU.Domain.Manager
 
         public SchoolInfoEntity GetSchoolInfoByID(int id)
         {
-            string sql = @"select * from SchoolInfo where valid = 'T' and id=@id ";
+            string sql = @"select * from SchoolInfo(nolock) where valid = 'T' and id=@id ";
             return Repository.Query<SchoolInfoEntity>(sql, new { id = id }).FirstOrDefault();
         }
 
         public SchoolInfoEntity GetSchoolInfoByCode(string code)
         {
-            string sql = @"select * from SchoolInfo where valid = 'T' and code=@code ";
+            string sql = @"select * from SchoolInfo(nolock) where valid = 'T' and code=@code ";
             return Repository.Query<SchoolInfoEntity>(sql, new { code = code }).FirstOrDefault();
         }
 
         public List<SchoolInfoEntity> GetSchoolInfoByName(string name)
         {
-            string sql = @"select * from SchoolInfo where valid = 'T' and name like '%'+ @name + '%' ";
+            string sql = @"select * from SchoolInfo(nolock) where valid = 'T' and name like '%'+ @name + '%' ";
             return Repository.Query<SchoolInfoEntity>(sql, new { name = name }).ToList();
         }
 
         public List<SchoolInfoEntity> GetSearch(string keyString, string sort, string order, int offset, int pageSize, out int total)
         {
             int pageCount = 0;
-            string querySql = string.Format("select * from SchoolInfo where valid = 'T'  and (code like '%{0}%' or name like '%{0}%')", keyString);
+            string querySql = string.Format("select * from SchoolInfo(nolock) where valid = 'T'  and (code like '%{0}%' or name like '%{0}%')", keyString);
             DataTable dt = SplitPage.SqlSplitPage(querySql, string.Format("order by {0} {1}", sort, order), null, offset / pageSize, pageSize, out pageCount, out total);
 
             List<SchoolInfoEntity> list = new List<SchoolInfoEntity>();
