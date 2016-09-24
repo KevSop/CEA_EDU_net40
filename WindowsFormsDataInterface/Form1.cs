@@ -115,7 +115,7 @@ namespace WindowsFormsDataInterface
 
             try
             {
-                UserManager manager = new UserManager();
+                UserInfoManager manager = new UserInfoManager();
                 CEAWebService client = new CEAWebService();
 
                 CEAUserInfoEntity[] ceaUsers = client.GetUserList();
@@ -383,7 +383,7 @@ namespace WindowsFormsDataInterface
                                 entity = new ClassInfoEntity();
                             }
 
-                            UserInfoEntity user = new UserManager().GetUserByCode(ceaEntity.TeacherCode);
+                            UserInfoEntity user = new UserInfoManager().GetUserByCode(ceaEntity.TeacherCode);
 
                             entity.Code = ceaEntity.Code;
                             entity.Name = ceaEntity.Name;
@@ -454,7 +454,7 @@ namespace WindowsFormsDataInterface
                                 throw new Exception(string.Format("班级编号：{0} 学员编号不能为空", ceaEntity.StudentCode));
                             }
 
-                            UserInfoEntity userEntity = new UserManager().GetUserByCode(ceaEntity.StudentCode);
+                            UserInfoEntity userEntity = new UserInfoManager().GetUserByCode(ceaEntity.StudentCode);
                             ClassInfoEntity classEntity = new ClassInfoManager().GetClassInfoByCode(ceaEntity.ClassCode);
 
                             if (classEntity == null)
@@ -549,7 +549,7 @@ namespace WindowsFormsDataInterface
                             CurriculumInfoEntity curriculumEntity = new CurriculumInfoManager().GetCurriculumInfoByCode(ceaEntity.CurriculumCode);
                             ClassInfoEntity classEntity = new ClassInfoManager().GetClassInfoByCode(ceaEntity.ClassCode);
                             ClassRoomInfoEntity classRoomEntity = new ClassRoomInfoManager().GetClassRoomInfoByCode(ceaEntity.ClassRoomCode);
-                            UserInfoEntity userEntity = new UserManager().GetUserByCode(ceaEntity.TeacherCode);
+                            UserInfoEntity userEntity = new UserInfoManager().GetUserByCode(ceaEntity.TeacherCode);
 
                             if (curriculumEntity == null)
                             {

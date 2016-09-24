@@ -58,7 +58,7 @@ namespace CEA_EDU.Web.Controllers
             else
             {
                 string code = model.Code;
-                UserManager um = new UserManager();
+                UserInfoManager um = new UserInfoManager();
                 UserInfoEntity ui = um.GetUserByCode(code);
                 Session[SessionHelper.CurrentUserKey] = new LoginUserViewModel { Name = ui.Name, Code = ui.Code, Type = ui.Type, Company = ui.Company };
                 if (ui == null)

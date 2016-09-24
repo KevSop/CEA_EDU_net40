@@ -163,6 +163,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\StaticInfoController.cs" />
     <Compile Include="Controllers\DictionaryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -2480,6 +2481,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Manage\DicIndex.cshtml" />
     <Content Include="Views\Manage\UserIndex.cshtml" />
+    <Content Include="Views\StaticInfo\CompanyIndex.cshtml" />
+    <Content Include="Views\StaticInfo\SchoolIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

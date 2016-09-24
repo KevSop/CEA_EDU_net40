@@ -62,13 +62,27 @@
     <Compile Include="Extensions\Mapper\ClassMapper.cs" />
     <Compile Include="Extensions\Mapper\PluralizedAutoClassMapper.cs" />
     <Compile Include="Extensions\Mapper\PropertyMap.cs" />
-    <Compile Include="Extensions\Sql\MySqlDialect.cs" />
-    <Compile Include="Extensions\Sql\PostgreSqlDialect.cs" />
-    <Compile Include="Extensions\Sql\SqlCeDialect.cs" />
-    <Compile Include="Extensions\Sql\SqlDialectBase.cs" />
-    <Compile Include="Extensions\Sql\SqlGenerator.cs" />
-    <Compile Include="Extensions\Sql\SqliteDialect.cs" />
-    <Compile Include="Extensions\Sql\SqlServerDialect.cs" />
+    <Compile Include="Extensions\Sql\MySqlDialect.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\Sql\PostgreSqlDialect.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\Sql\SqlCeDialect.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\Sql\SqlDialectBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\Sql\SqlGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\Sql\SqliteDialect.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\Sql\SqlServerDialect.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlBuilder.cs" />
     <Compile Include="SqlMapper.cs" />

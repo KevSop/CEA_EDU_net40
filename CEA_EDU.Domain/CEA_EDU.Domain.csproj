@@ -56,7 +56,7 @@
     <Compile Include="Entity\LoginLogEntity.cs" />
     <Compile Include="Entity\SchoolInfoEntity.cs" />
     <Compile Include="Entity\StudentClassHistoryEntity.cs" />
-    <Compile Include="Entity\ViewEntity\ArrangeClassEntity.cs" />
+    <Compile Include="Entity\ViewEntity\ArrangeClassViewEntity.cs" />
     <Compile Include="Manager\CompanyInfoManager.cs" />
     <Compile Include="Manager\ClassInfoManager.cs" />
     <Compile Include="Manager\ClassRoomInfoManager.cs" />
@@ -76,7 +76,7 @@
     <Compile Include="IRepository.cs" />
     <Compile Include="ManagerBase.cs" />
     <Compile Include="Manager\SysDicManager.cs" />
-    <Compile Include="Manager\UserManager.cs" />
+    <Compile Include="Manager\UserInfoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Session.cs" />

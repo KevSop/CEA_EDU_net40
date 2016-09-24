@@ -12,7 +12,7 @@ namespace CEA_EDU.Domain.Manager
     /// <summary>
     /// 用户管理类
     /// </summary>
-    public class UserManager : ManagerBase
+    public class UserInfoManager : ManagerBase
     {
         /// <summary>
         /// 插入一条记录
@@ -89,11 +89,12 @@ namespace CEA_EDU.Domain.Manager
             return Repository.Query<UserInfoEntity>(sql, new { type = type }).ToList();
         }
 
-        public List<UserInfoEntity> GetSearch(string keyString, string sort, string order, int offset, int pageSize, out int total)
+        public List<UserInfoEntity> GetSearch(string keyString, string type, string sort, string order, int offset, int pageSize, out int total)
         {
             int pageCount = 0;
-            string querySql = string.Format("select * from UserInfo(nolock) where valid = 'T' and (code like '%{0}%' or name like '%{0}%') ", keyString);
-            DataTable dt = SplitPage.SqlSplitPage(querySql, string.Format("order by {0} {1}", sort, order), null, offset / pageSize, pageSize, out pageCount, out total);
+            string querySql = string.Format("select * from UserInfo(nolock) where valid = 'T' {1} and (code like '%{0}%' or name like '%{0}%') ",
+                keyString, string.IsNullOrWhiteSpace(type) ? "" : string.Format(" and Type = '{0}'", type));
+            DataTable dt = SplitPage.SqlSplitPage(querySql, string.Format("order by {0} {1}", sort, order), null, offset / pageSize + 1, pageSize, out pageCount, out total);
             List<UserInfoEntity> list = new List<UserInfoEntity>();
             foreach (DataRow dr in dt.Rows)
             {

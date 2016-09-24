@@ -22,7 +22,7 @@ namespace CEA_EDU.Web.Controllers
             ViewBag.CurrentPageRights = "unknow";
             if (!"Home".Equals(filterContext.RequestContext.RouteData.Values["controller"].ToString()))
             {   
-		//判定访问权限
+		        //判定访问权限
                 string url = Request.Url.LocalPath.TrimStart('/');
                 if (Request.ApplicationPath != "/")
                 {

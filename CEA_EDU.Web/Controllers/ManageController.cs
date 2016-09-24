@@ -63,9 +63,11 @@ namespace CEA_EDU.Web.Controllers
             int offset = Convert.ToInt32(HttpContext.Request.Params["offset"]);  //0
             int pageSize = Convert.ToInt32(HttpContext.Request.Params["limit"]);
 
+            string userType = HttpContext.Request.Params["searchUserType"];
+
             int total = 0;
-            UserManager um = new UserManager();
-            List<UserInfoEntity> list = um.GetSearch(searchKey, sort, order, offset, pageSize, out total);
+            UserInfoManager um = new UserInfoManager();
+            List<UserInfoEntity> list = um.GetSearch(searchKey, userType, sort, order, offset, pageSize, out total);
 
             List<UserViewModel> listView = new List<UserViewModel>();
             foreach (var item in list)
@@ -109,7 +111,7 @@ namespace CEA_EDU.Web.Controllers
             try
             {
                 UserInfoEntity ue = JsonConvert.DeserializeObject<UserInfoEntity>(jsonString);
-                UserManager pm = new UserManager();
+                UserInfoManager pm = new UserInfoManager();
                 if (action == "add")
                 {
                     pm.Insert(ue);

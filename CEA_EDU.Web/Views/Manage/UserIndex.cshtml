@@ -15,6 +15,23 @@
             <div id="toolbar">
                 <div style="float:left" class="btn btn-primary" data-toggle="modal" data-target="#addModal" onclick="AddUser()">添加记录</div>
             </div>
+         
+            <div style="border: #E2E2E4 1px solid;">
+                <fieldset>
+                    <legend>查询条件</legend>
+                    <div class="form-group" style=" padding-top:10px;">
+                        <label class="col-sm-2 control-label" for="searchUserType">用户类型:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="SearchUserType" onchange="ReloadTable()">
+                                <option value="">请选择</option>
+                                <option value="Student">学员</option>
+                                <option value="Teacher">老师</option>
+                                <option value="Admin">系统管理员</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset> 
+            </div>
 
             <table id="mytab" class="table table-hover"></table>
 
@@ -33,6 +50,17 @@
                                 姓名：<input type="text" class="form-control" id="Name" placeholder="请输入姓名">
                             </div>
                             <div class="form-group">
+                                工号：<input type="text" class="form-control" id="Code" placeholder="请输入工号">
+                            </div>
+                            <div class="form-group">
+                                用户类型：<select class="form-control" id="Type">
+                                    <option value="-">请选择</option>
+                                    <option value="Student">学员</option>
+                                    <option value="Teacher">老师</option>
+                                    <option value="Admin">系统管理员</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 所在公司：<select class="form-control" id="Company">
                                     <option value="-">请选择</option>
                                     @{
@@ -41,20 +69,6 @@
                                             <option value="@item.Code">@item.Name</option>
                                         }
                                     }
-                                </select>
-
-
-
-                            </div>
-                            <div class="form-group">
-                                工号：<input type="text" class="form-control" id="Code" placeholder="请输入工号">
-                            </div>
-                            <div class="form-group">
-                                用户类型：<select class="form-control" id="Type">
-                                    <option value="-">请选择</option>
-                                    <option value="普通用户">普通用户</option>
-                                    <option value="超级用户">超级用户</option>
-                                    <option value="超级管理员">超级管理员</option>
                                 </select>
                             </div>
                         </div>
@@ -78,7 +92,7 @@
                         <div class="modal-body">
                             <input type="hidden" id="editUserId" />
                             <div class="form-group">
-                                公司：<select class="form-control" id="iMenuCompanyCode" onchange="ChangeUserCompany()">
+                          @*      公司：<select class="form-control" id="iMenuCompanyCode" onchange="ChangeUserCompany()">
                                     <option value="-">请选择</option>
                                     @{
                                         foreach (var item in ViewBag.Companies)
@@ -86,7 +100,7 @@
                                             <option value="@item.Code">@item.Name</option>
                                         }
                                     }
-                                </select>
+                                </select>*@
 
 
 
@@ -124,7 +138,7 @@
         })
 
         $('#mytab').bootstrapTable({
-            url: "GetAllUsers",//数据源
+            url: "../Manage/GetAllUsers",//数据源
             dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
             sortName: "CreateTime",//排序列
             cache: false,
@@ -134,7 +148,7 @@
             height: tableHeight(),//高度调整
             search: true,//是否搜索
             pagination: true,//是否分页
-            pageSize: 15,//单页记录数
+            pageSize: 5,//单页记录数
             pageNumber: 1,//起始页
             pageList: [15, 20, 30, 50, 100, 10000],//分页步进值
             sidePagination: "server",//服务端分页
@@ -145,6 +159,7 @@
             queryParamsType: "limit",//查询参数组织方式
             queryParams: function getParams(params) {
                 //params obj
+                params.searchUserType = $('#SearchUserType').val(); 
                 params.other = "otherInfo";
                 return params;
             },
@@ -168,6 +183,12 @@
                     //,titleTooltip: "this is tips"
                 },
                 {
+                    field: "Type",
+                    title: "用户类型",
+                    sortable: true
+                    //formatter: 'infoFormatter',//对本列数据做格式化
+                },
+                {
                     field: "Company",
                     title: "所属公司",
                     sortable: true,
@@ -175,23 +196,17 @@
                     visible: false
                 },
                 {
-                    field: "Type",
-                    title: "用户类型",
-                    sortable: true
-                    //formatter: 'infoFormatter',//对本列数据做格式化
-                },
-                {
                     field: "UpdateTime",
                     title: "最近修改时间",
                     sortable: true,
                     order: "desc", //默认排序方式
                     formatter: 'dateFormatter',//对本列数据做格式化
-                },
-                {
-                    field: "operation",
-                    title: "菜单权限",
-                    formatter: 'infoFormatter',//对本列数据做格式化
-                }
+                }//,
+//                {
+//                    field: "operation",
+//                    title: "菜单权限",
+//                    formatter: 'infoFormatter',//对本列数据做格式化
+//                }
 
             ],
             onClickRow: function (row, $element) {
@@ -246,7 +261,7 @@
             param.jsonString = JSON.stringify(nodeObj);
             param.action = $("#editRowIndex").val() == "" ? "add" : "update";
             $.ajax({
-                url: "UsersSaveChanges",
+                url: "../Manage/UsersSaveChanges",
                 type: "POST",
                 data: param,
                 dataType: 'text',
@@ -341,7 +356,7 @@
     }
 
     function tableHeight() {
-        return $(window).height() * 0.85;
+        return $(window).height() * 0.7;
     }
 
     function infoFormatter(value, row, index) {
@@ -417,7 +432,7 @@
         var company = $("#Company").val();
         UpdateMenuTree(userid, company);
     }
-    //
+    
     function AddUser() {
         $("#addModal").find("input[type='text']").each(function () {
             $(this).val("");
@@ -435,4 +450,8 @@
         $("#addModalLabel").html("添加记录");
     }
 
+    function ReloadTable()
+    {
+       $('#mytab').bootstrapTable('refresh');  
+    }
 </script>

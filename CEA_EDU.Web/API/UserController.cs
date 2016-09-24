@@ -24,27 +24,27 @@ namespace CEA_EDU.Web.API
     {
         public string GetUserByID(int id)
         {
-            UserManager manager = new UserManager();
+            UserInfoManager manager = new UserInfoManager();
             return new JavaScriptSerializer().Serialize(manager.GetUserByID(id));
         }
 
         public string GetUserByCode(string code)
         {
-            UserManager manager = new UserManager();
+            UserInfoManager manager = new UserInfoManager();
             return new JavaScriptSerializer().Serialize(manager.GetUserByCode(code));
         }
 
         public string GetUserByName(string name)
         {
-            UserManager manager = new UserManager();
+            UserInfoManager manager = new UserInfoManager();
             return new JavaScriptSerializer().Serialize(manager.GetUserByName(name));
         }
 
-        public string GetAll(string order, string sort, string searchKey, int offset, int pageSize)
+        public string GetAll(string searchKey, string userType, string order, string sort, int offset, int pageSize)
         {
             int total = 0;
-            UserManager manager = new UserManager();
-            List<UserInfoEntity> list = manager.GetSearch(searchKey, sort, order, offset, pageSize, out total);
+            UserInfoManager manager = new UserInfoManager();
+            List<UserInfoEntity> list = manager.GetSearch(searchKey, userType, sort, order, offset, pageSize, out total);
 
             //给分页实体赋值  
             PageModels<UserInfoEntity> model = new PageModels<UserInfoEntity>();
@@ -69,7 +69,7 @@ namespace CEA_EDU.Web.API
                     return "error";
                 }
 
-                UserManager manager = new UserManager();
+                UserInfoManager manager = new UserInfoManager();
 
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
@@ -93,7 +93,7 @@ namespace CEA_EDU.Web.API
                     return "error";
                 }
 
-                UserManager manager = new UserManager();
+                UserInfoManager manager = new UserInfoManager();
 
                 entity.CreateTime = DateTime.Now;
                 entity.CreateTime = DateTime.Now;
@@ -112,7 +112,7 @@ namespace CEA_EDU.Web.API
         {
             try
             {
-                UserManager manager = new UserManager();
+                UserInfoManager manager = new UserInfoManager();
 
                 UserInfoEntity entity = manager.GetUserByID(id);
                 if (entity != null)
