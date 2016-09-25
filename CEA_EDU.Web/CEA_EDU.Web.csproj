@@ -163,6 +163,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BasicInfoController.cs" />
     <Compile Include="Controllers\StaticInfoController.cs" />
     <Compile Include="Controllers\DictionaryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -171,6 +172,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CommonModel.cs" />
+    <Compile Include="Models\ClassViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\DictionaryViewModel.cs" />
     <Compile Include="Models\DicViewModel.cs" />
@@ -2483,6 +2485,9 @@
     <Content Include="Views\Manage\UserIndex.cshtml" />
     <Content Include="Views\StaticInfo\CompanyIndex.cshtml" />
     <Content Include="Views\StaticInfo\SchoolIndex.cshtml" />
+    <Content Include="Views\BasicInfo\CurriculumIndex.cshtml" />
+    <Content Include="Views\BasicInfo\ClassRoomIndex.cshtml" />
+    <Content Include="Views\BasicInfo\ClassIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
