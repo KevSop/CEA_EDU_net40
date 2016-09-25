@@ -4,7 +4,6 @@ using System.Text;
 
 namespace CEA_EDU.Domain.Entity.ViewEntity
 {
-    [Table("ArrangeClass")]
     public class ArrangeClassViewEntity
     {
         public Int32 ID { get; set; }

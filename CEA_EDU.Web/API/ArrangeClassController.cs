@@ -17,15 +17,16 @@ using CEA_EDU.Web.Utils;
 using Newtonsoft.Json;
 using System.Web.Http;
 using Newtonsoft.Json.Linq;
+using CEA_EDU.Domain.Entity.ViewEntity;
 
 namespace CEA_EDU.Web.API
 {
     public class ArrangeClassController : ApiController
     {
-        public string GetArrangeClassView(int? curriculumID, int? classID, int? classRoomID, int? teacherID, DateTime? startTime, DateTime? endTime)
+        public string GetArrangeClassViewList(int? curriculumID, int? classID, int? classRoomID, int? teacherID, DateTime? startTime, DateTime? endTime)
         {
             ArrangeClassManager manager = new ArrangeClassManager();
-            return new JavaScriptSerializer().Serialize(manager.GetArrangeClassView(curriculumID, classID, classRoomID, teacherID, startTime, endTime));
+            return new JavaScriptSerializer().Serialize(manager.GetArrangeClassViewList(curriculumID, classID, classRoomID, teacherID, startTime, endTime));
         }
 
         public string GetArrangeClassByID(int id)
@@ -52,21 +53,24 @@ namespace CEA_EDU.Web.API
             return new JavaScriptSerializer().Serialize(manager.GetArrangeClassByClassRoomID(classRoomID));
         }
 
-        public string GetAll(string order, string sort, string searchKey, int offset, int pageSize)
+        public string GetAll(int? curriculumID, int? classID, int? classRoomID, int? teacherID, DateTime? startTime, DateTime? endTime, int offset, int pageSize)
         {
             int total = 0;
             ArrangeClassManager manager = new ArrangeClassManager();
-            List<ArrangeClassEntity> list = manager.GetSearch(sort, order, offset, pageSize, out total);
+            List<ArrangeClassViewEntity> list = manager.GetArrangeClassViewList(curriculumID, classID, classRoomID, teacherID, startTime, endTime);
+
+            total = list.Count;
+            List<ArrangeClassViewEntity> listView = list.Skip(offset).Take(pageSize).ToList();
 
             //给分页实体赋值  
-            PageModels<ArrangeClassEntity> model = new PageModels<ArrangeClassEntity>();
+            PageModels<ArrangeClassViewEntity> model = new PageModels<ArrangeClassViewEntity>();
             model.total = total;
             if (total % pageSize == 0)
                 model.page = total / pageSize;
             else
                 model.page = (total / pageSize) + 1;
 
-            model.rows = list;
+            model.rows = listView;
 
             //将查询结果返回  
             return new JavaScriptSerializer().Serialize(model);

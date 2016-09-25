@@ -65,6 +65,12 @@ namespace CEA_EDU.Domain.Manager
             }
         }
 
+        public List<ClassRoomInfoEntity> GetAll()
+        {
+            string sql = @"select * from ClassRoomInfo(nolock) where valid = 'T'";
+            return Repository.Query<ClassRoomInfoEntity>(sql).ToList();
+        }
+
         public ClassRoomInfoEntity GetClassRoomInfoByID(int classRoomID)
         {
             string sql = @"select * from ClassRoomInfo(nolock) where valid = 'T' and classRoomID=@classRoomID ";

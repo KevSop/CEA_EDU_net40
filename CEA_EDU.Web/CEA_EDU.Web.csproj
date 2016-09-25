@@ -164,6 +164,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BasicInfoController.cs" />
+    <Compile Include="Controllers\MappingInfoController.cs" />
     <Compile Include="Controllers\StaticInfoController.cs" />
     <Compile Include="Controllers\DictionaryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2488,6 +2489,8 @@
     <Content Include="Views\BasicInfo\CurriculumIndex.cshtml" />
     <Content Include="Views\BasicInfo\ClassRoomIndex.cshtml" />
     <Content Include="Views\BasicInfo\ClassIndex.cshtml" />
+    <Content Include="Views\MappingInfo\ClassStudentMapIndex.cshtml" />
+    <Content Include="Views\MappingInfo\ArrangeClassIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2500,6 +2503,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CEA_EDU.Common\CEA_EDU.Common.csproj">
+      <Project>{EF8F4E27-0B9C-4F2B-9609-0504DB8C710C}</Project>
+      <Name>CEA_EDU.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CEA_EDU.Domain\CEA_EDU.Domain.csproj">
       <Project>{29c9c8cc-45c5-47c4-9f82-1a4a277c1ca3}</Project>
       <Name>CEA_EDU.Domain</Name>

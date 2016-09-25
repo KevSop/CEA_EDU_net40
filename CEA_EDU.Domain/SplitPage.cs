@@ -28,10 +28,10 @@ namespace CEA_EDU.Domain
         public static DataTable SqlSplitPage(string select, string orderby, IList<SqlParameter> listPara, int pageIndex, int pageSize, out int pageCount, out int recordCount)
         {
             select = select.Trim();
-            if (select.StartsWith("select", StringComparison.OrdinalIgnoreCase))
+            if (select.StartsWith("SELECT", StringComparison.OrdinalIgnoreCase))
                 select = select.Substring(6);
             if (string.IsNullOrWhiteSpace(orderby))
-                orderby = "order by (select 1)";
+                orderby = "ORDER BY (SELECT 1)";
             if (pageIndex < 1)
                 pageIndex = 1;
             if (listPara == null)
@@ -39,7 +39,7 @@ namespace CEA_EDU.Domain
             int startRowNo = ((pageIndex - 1) * pageSize) + 1;
             int endRowNo = pageIndex * pageSize;
             string sql = @"SELECT COUNT(1) FROM (SELECT {0}) A
-            SELECT * FROM (SELECT row_number() over({1}) as rowNO,{0}) B WHERE rowNo between @startRowNo and @endRowNo";
+            SELECT * FROM (SELECT ROW_NUMBER() OVER({1}) AS rowNO,{0}) B WHERE rowNo BETWEEN @startRowNo AND @endRowNo";
             sql = string.Format(sql, select, orderby);
             listPara.Add(new SqlParameter("@StartRowNo", startRowNo));
             listPara.Add(new SqlParameter("@EndRowNo", endRowNo));

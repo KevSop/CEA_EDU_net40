@@ -57,6 +57,7 @@
     <Compile Include="Entity\SchoolInfoEntity.cs" />
     <Compile Include="Entity\StudentClassHistoryEntity.cs" />
     <Compile Include="Entity\ViewEntity\ArrangeClassViewEntity.cs" />
+    <Compile Include="Entity\ViewEntity\ClassStudentMapViewEntity.cs" />
     <Compile Include="Manager\CompanyInfoManager.cs" />
     <Compile Include="Manager\ClassInfoManager.cs" />
     <Compile Include="Manager\ClassRoomInfoManager.cs" />

@@ -65,6 +65,12 @@ namespace CEA_EDU.Domain.Manager
             }
         }
 
+        public List<CurriculumInfoEntity> GetAll()
+        {
+            string sql = @"select * from CurriculumInfo(nolock) where valid = 'T'";
+            return Repository.Query<CurriculumInfoEntity>(sql).ToList();
+        }
+
         public CurriculumInfoEntity GetCurriculumInfoByID(int curriculumID)
         {
             string sql = @"select * from CurriculumInfo(nolock) where valid = 'T' and curriculumID=@curriculumID ";

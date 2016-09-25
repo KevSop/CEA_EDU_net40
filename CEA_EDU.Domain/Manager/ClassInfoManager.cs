@@ -65,6 +65,12 @@ namespace CEA_EDU.Domain.Manager
             }
         }
 
+        public List<ClassInfoEntity> GetAll()
+        {
+            string sql = @"select * from ClassInfo(nolock) where valid = 'T'";
+            return Repository.Query<ClassInfoEntity>(sql).ToList();
+        }
+
         public ClassInfoEntity GetClassInfoByID(int classID)
         {
             string sql = @"select * from ClassInfo(nolock) where valid = 'T' and classID=@classID ";

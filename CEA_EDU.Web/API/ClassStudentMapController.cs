@@ -40,30 +40,10 @@ namespace CEA_EDU.Web.API
             return new JavaScriptSerializer().Serialize(manager.GetClassStudentMapByStudentID(studentID));
         }
 
-        public string GetStudentListByClassID(int classID)
+        public string GetClassStudentMapViewList(int? classID, int? studentID)
         {
             ClassStudentMapManager manager = new ClassStudentMapManager();
-            return new JavaScriptSerializer().Serialize(manager.GetStudentListByClassID(classID));
-        }
-
-        public string GetAll(string order, string sort, string searchKey, int offset, int pageSize)
-        {
-            int total = 0;
-            ClassStudentMapManager manager = new ClassStudentMapManager();
-            List<ClassStudentMapEntity> list = manager.GetSearch(sort, order, offset, pageSize, out total);
-
-            //给分页实体赋值  
-            PageModels<ClassStudentMapEntity> model = new PageModels<ClassStudentMapEntity>();
-            model.total = total;
-            if (total % pageSize == 0)
-                model.page = total / pageSize;
-            else
-                model.page = (total / pageSize) + 1;
-
-            model.rows = list;
-
-            //将查询结果返回  
-            return new JavaScriptSerializer().Serialize(model);
+            return new JavaScriptSerializer().Serialize(manager.GetClassStudentMapViewList(classID, studentID));
         }
 
         public string PostClassStudentMap(ClassStudentMapEntity entity)

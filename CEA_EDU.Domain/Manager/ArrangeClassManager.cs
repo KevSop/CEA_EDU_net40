@@ -68,18 +68,18 @@ namespace CEA_EDU.Domain.Manager
         }
 
 
-        public List<ArrangeClassViewEntity> GetArrangeClassView(int? curriculumID, int? classID, int? classRoomID, int? teacherID, DateTime? startTime, DateTime? endTime)
+        public List<ArrangeClassViewEntity> GetArrangeClassViewList(int? curriculumID, int? classID, int? classRoomID, int? teacherID, DateTime? startTime, DateTime? endTime)
         {
             StringBuilder sql = new StringBuilder();
             sql.Append(@"select a.ID, cc.CurriculumID, cc.Code as 'CurriculumCode', cc.Name as 'CurriculumName', c.ClassID, c.Code as 'ClassCode',
-                               c.Name as 'ClassName', cr.ClassRoomID, cr.Code as 'ClassRoomCode', cr.Name sd 'ClassRoomName',
+                               c.Name as 'ClassName', cr.ClassRoomID, cr.Code as 'ClassRoomCode', cr.Name as 'ClassRoomName',
                                u.ID as 'TeacherID', u.Code as 'TeacherCode', u.Name as 'TeacherName', a.StartTime, a.EndTime,
                                a.Remark, a.BespeakCount, a.AttendCount, a.PassedCount
                            from ArrangeClass(nolock) a
                                inner join CurriculumInfo(nolock) cc on cc.CurriculumID = a.CurriculumID and cc.valid = 'T'
                                inner join ClassInfo(nolock) c on c.ClassID = a.ClassID and c.valid = 'T'
                                inner join ClassRoomInfo(nolock) cr on cr.ClassRoomID = a.ClassRoomID and cr.valid = 'T'
-                               inner join UserInfo(nolock) u on u.ID = a.TeacherID and u.valid = 'T'
+                               left join UserInfo(nolock) u on u.ID = a.TeacherID and u.valid = 'T'
                            where a.valid = 'T' ");
 
             List<SqlParameter> paraList = new List<SqlParameter>();
@@ -120,9 +120,18 @@ namespace CEA_EDU.Domain.Manager
                 paraList.Add(para);
             }
 
+            if (teacherID != null && teacherID > 0)
+            {
+                sql.Append(" and a.TeacherID = @TeacherID");
+
+                SqlParameter para = new SqlParameter("@TeacherID", SqlDbType.Int);
+                para.SqlValue = teacherID;
+                paraList.Add(para);
+            }
+
             if (startTime != null)
             {
-                sql.Append(" and a.StartTime = @StartTime");
+                sql.Append(" and a.StartTime >= @StartTime");
 
                 SqlParameter para = new SqlParameter("@StartTime", SqlDbType.DateTime);
                 para.SqlValue = startTime;
@@ -132,7 +141,7 @@ namespace CEA_EDU.Domain.Manager
 
             if (endTime != null)
             {
-                sql.Append(" and a.EndTime = @EndTime");
+                sql.Append(" and a.EndTime < @EndTime");
 
                 SqlParameter para = new SqlParameter("@EndTime", SqlDbType.DateTime);
                 para.SqlValue = endTime;

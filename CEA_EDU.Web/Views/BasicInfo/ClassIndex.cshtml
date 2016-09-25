@@ -120,13 +120,6 @@
             toolbarAlign: "right",//工具栏对齐方式
             columns: [
                 {
-                    field: "ClassID",//键名
-                    title: "ID",//标题
-                    visible: false
-                    //sortable: true//是否可排序
-                    //order: "desc"//默认排序方式
-                },
-                {
                     field: "Code",
                     title: "编号",
                     sortable: true
@@ -170,6 +163,12 @@
                     sortable: true,
                     order: "desc",//默认排序方式
                     formatter: 'dateFormatter'//对本列数据做格式化
+                },
+                {
+                    field: "ClassID",
+                    title: "操作",
+                    sortable: false,
+                    formatter: 'studentListLinkFormatter'//对本列数据做格式化
                 }
             ],
             onClickRow: function (row, $element) {
@@ -284,6 +283,10 @@
 
     function descriptionFormatter(value, row, index){
         return "<span title='双击查看具体描述信息'>" + (value.length > 80 ? value.substring(0, 80) + "..." : value) + "</span>";
+    }
+
+    function studentListLinkFormatter(value, row, index){
+        return "<a href='" + '@Url.Action("ClassStudentMapIndex", "MappingInfo")' + "?classID=" + value + "'>学生信息</a>"
     }
 
     function AddRecord() {

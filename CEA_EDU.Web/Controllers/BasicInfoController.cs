@@ -63,6 +63,7 @@ namespace CEA_EDU.Web.Controllers
                 viewModel.Company = item.Company;
                 viewModel.Department = item.Department;
                 viewModel.Remark = item.Remark;
+                viewModel.UpdateTime = item.UpdateTime;
 
                 var teacherEntity = teacherList.Where(r => r.ID == item.TeacherID).FirstOrDefault();
                 if (teacherEntity != null)
